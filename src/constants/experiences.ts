@@ -15,8 +15,8 @@ export const experiences = {
 		subtitle: "Anuntech | Integral | Remota",
 		description: [
 			"Em 2025, após um breve intervalo dedicado ao Exame Nacional do Ensino Médio (ENEM), iniciei minha graduação em Ciência e Tecnologia na Universidade Federal do Maranhão (UFMA) e, nesse período, retornei à Anuntech. Essa experiência tem ampliado meus conhecimentos técnicos e, sobretudo, minhas habilidades de trabalho em equipe — essenciais para o desenvolvimento e a entrega de projetos reais em ambiente de produção.",
-			"Entre esses projetos, destaca-se o Workspace, um aplicativo corporativo desenvolvido para centralizar ferramentas essenciais à gestão empresarial e ao dia a dia dos colaboradores. O app integra diversas outras soluções desenvolvidas pela Anuntech, como o Finexa, voltado à análise financeira corporativa.",
-			"Atualmente, atuo como Desenvolvedor Front‑end, contribuindo para o aprimoramento do Workspace e o desenvolvimento do Finexa, que oferece recursos de extratos e dashboards, proporcionando uma visão ampla e estratégica das finanças empresariais.",
+			"Entre esses projetos, destaca-se o Workspace, um aplicativo corporativo desenvolvido para centralizar ferramentas essenciais à gestão empresarial e ao dia a dia dos colaboradores. O app integra diversas outras soluções desenvolvidas pela Anuntech, como o Finexa, voltado à análise financeira corporativa, e o Bookmarks, voltado para a organização do Workspace através de atalhos e espaços.",
+			"Atualmente, atuo como Desenvolvedor Front‑end, contribuindo para o aprimoramento do Workspace, o desenvolvimento do Finexa, que oferece recursos de extratos e dashboards, proporcionando uma visão ampla e estratégica das finanças empresariais, e o Bookmarks com gerenciamento de atalhos  e pastas que são integrados ao Workspace via Module Federation.",
 		],
 		skills: [
 			"Desenvolvimento web",
@@ -28,6 +28,7 @@ export const experiences = {
 			"Vite",
 			"Tailwind CSS",
 			"Biome",
+			"Module Federation",
 		],
 	},
 	anuntech: {
