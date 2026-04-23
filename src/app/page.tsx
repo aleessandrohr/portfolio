@@ -21,15 +21,19 @@ const Home = () => {
 						<h2 className="custom_title sticky top-0 border-border border-b border-solid bg-background py-2">
 							Resumo
 						</h2>
-						<p className="custom_description">
-							Desenvolvedor Front‑end especializado em TypeScript e React,
-							focado na construção de aplicações escaláveis, performáticas,
-							responsivas e acessíveis, com SEO bem estruturado. Graduando em
-							Ciência e Tecnologia pela Universidade Federal do Maranhão (UFMA),
-							com interesse em Desenvolvimento de Software e melhores práticas
-							de engenharia. Atualmente na Anuntech, atuando de forma
-							colaborativa para entregar soluções reais em produção, com atenção
-							à arquitetura, qualidade de código e experiência do usuário.
+						<p className="custom_description flex flex-col gap-1">
+							<span>
+								Desenvolvedor FullStack com experiência em TypeScript, atuando
+								no front-end com React e Next.js e no back-end com Node.js,
+								trabalhando com bancos SQL e NoSQL em ambientes conteinerizados
+								com Docker. Graduando em Ciência e Tecnologia pela UFMA.
+							</span>
+							<span>
+								Na Anuntech, contribuo para o desenvolvimento do Workspace — uma
+								plataforma SaaS que entrega soluções personalizadas para
+								empresas, construída com Module Federation para suportar uma
+								arquitetura modular e escalável.
+							</span>
 						</p>
 					</section>
 					<section id="experiences" className="flex flex-col gap-4">

@@ -6,7 +6,7 @@ export const education = {
 		end: "01/2028",
 		title: "Universidade Federal do Maranhão (UFMA)",
 		subtitle: "Ciência e Tecnologia",
-		description: ["Graduação em Ciência e Tecnologia."],
+		description: ["Graduação em Engenharia de Computação."],
 	},
 	rocketseat: {
 		start: "01/2021",

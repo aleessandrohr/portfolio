@@ -38,11 +38,11 @@ export const Profile = () => (
 						/>
 					</picture>
 					<span className="font-bold text-2xl">Alessandro Henrique Ramos</span>
-					<span className="text-xl">Desenvolvedor Front-end Pleno</span>
+					<span className="text-xl">Desenvolvedor FullStack Pleno</span>
 				</CardTitle>
 				<CardDescription className="custom_description">
-					Olá! Meu nome é Alessandro Henrique Ramos e eu sou um Desenvolvedor
-					Front-end Pleno focado em TypeScript e React.js.
+					Olá! Meu nome é Alessandro Henrique Ramos e sou Desenvolvedor
+					FullStack Pleno com experiência em TypeScript, React e Node.js.
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="flex flex-col gap-2">
