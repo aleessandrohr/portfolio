@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/providers/theme";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Alessandro | Desenvolvedor Front-end Pleno",
+	title: "Alessandro | Desenvolvedor FullStack Pleno",
 	description:
-		"Olá! Me chamo Alessandro e este é o portfólio do meu trabalho como Desenvolvedor Front-end Pleno focado em TypeScript e React.js.",
+		"Olá! Meu nome é Alessandro Henrique Ramos e sou Desenvolvedor FullStack Pleno com experiência em TypeScript, React e Node.js.",
 };
 
 export default function RootLayout({
