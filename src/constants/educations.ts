@@ -8,11 +8,4 @@ export const education = {
 		subtitle: "Ciência e Tecnologia",
 		description: ["Graduação em Engenharia de Computação."],
 	},
-	rocketseat: {
-		start: "01/2021",
-		end: "Presente",
-		title: "Rocketseat",
-		subtitle: "",
-		description: ["Evolução constante através da Rocketseat desde 2021.	"],
-	},
 } as const satisfies Record<string, Experience>;
