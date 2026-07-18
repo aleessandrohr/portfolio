@@ -1,20 +1,20 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Icon } from "@/components/icon";
-import { Button } from "@/components/ui/button";
+import { Icon } from '@/components/icon'
+import { Button } from '@/components/ui/button'
 import {
 	Card,
 	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import type { Project as ProjectType } from "@/constants/projects";
-import { Iframe } from "./components/iframe";
+} from '@/components/ui/card'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import type { Project as ProjectType } from '@/constants/projects'
+import { Iframe } from './components/iframe'
 
-type Props = ProjectType;
+type Props = ProjectType
 
 export const Project = ({
 	imageUrl,
@@ -62,7 +62,7 @@ export const Project = ({
 				{links.map(link => (
 					<Link
 						key={link}
-						className="flex w-full items-center gap-2"
+						className="flex w-full items-center gap-2 text-brand transition-colors hover:text-brand/80"
 						href={link}
 						target="_blank"
 					>
@@ -73,4 +73,4 @@ export const Project = ({
 			</CardFooter>
 		</section>
 	</Card>
-);
+)

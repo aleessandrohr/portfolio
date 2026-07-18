@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
-import { Loading } from "@/components/ui/loading";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+import { useState } from 'react'
+import { Loading } from '@/components/ui/loading'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface Props {
-	title: string;
-	iframeUrl?: string;
+	title: string
+	iframeUrl?: string
 }
 
-export const Iframe = ({title, iframeUrl}: Props) => {
-	const [loading, setLoading] = useState(true);
+export const Iframe = ({ title, iframeUrl }: Props) => {
+	const [loading, setLoading] = useState(true)
 
 	return (
 		<>
@@ -27,5 +27,5 @@ export const Iframe = ({title, iframeUrl}: Props) => {
 				onLoad={() => setLoading(false)}
 			/>
 		</>
-	);
-};
+	)
+}

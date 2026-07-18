@@ -1,11 +1,11 @@
-import type { Experience } from "./experiences";
+import type { Experience } from './experiences'
 
 export const education = {
 	ufma: {
-		start: "01/2025",
-		end: "01/2028",
-		title: "Universidade Federal do Maranhão (UFMA)",
-		subtitle: "Ciência e Tecnologia",
-		description: ["Graduação em Engenharia de Computação."],
+		start: '01/2025',
+		end: '01/2028',
+		title: 'Universidade Federal do Maranhão (UFMA)',
+		subtitle: 'Ciência e Tecnologia',
+		description: ['Graduação em Engenharia de Computação.'],
 	},
-} as const satisfies Record<string, Experience>;
+} as const satisfies Record<string, Experience>

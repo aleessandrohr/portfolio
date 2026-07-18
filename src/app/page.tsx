@@ -1,13 +1,13 @@
-import { Experience } from "@/components/experience";
-import { Profile } from "@/components/profile";
-import { Project } from "@/components/project";
-import { education } from "@/constants/educations";
-import { experiences } from "@/constants/experiences";
-import { projects } from "@/constants/projects";
+import { Experience } from '@/components/experience'
+import { Profile } from '@/components/profile'
+import { Project } from '@/components/project'
+import { education } from '@/constants/educations'
+import { experiences } from '@/constants/experiences'
+import { projects } from '@/constants/projects'
 
-const experiencesArray = [...Object.values(experiences)];
-const projectsArray = [...Object.values(projects)];
-const educationArray = [...Object.values(education)];
+const experiencesArray = [...Object.values(experiences)]
+const projectsArray = [...Object.values(projects)]
+const educationArray = [...Object.values(education)]
 
 const Home = () => {
 	return (
@@ -18,15 +18,19 @@ const Home = () => {
 			<main className="md:custom_container flex w-full flex-col md:h-dvh md:overflow-y-auto md:py-0">
 				<div className="relative flex w-full max-w-screen-sm flex-col gap-8 self-end py-4">
 					<section id="resume" className="flex flex-col gap-4">
-						<h2 className="custom_title sticky top-0 border-border border-b border-solid bg-background py-2">
+						<h2 className="custom_title sticky top-0 border-brand/50 border-b border-solid bg-background py-2">
 							Resumo
 						</h2>
 						<p className="custom_description flex flex-col gap-2">
-							Desenvolvedor FullStack Pleno com 4+ anos de experiência em TypeScript, especializado em front-end com React.js e Next.js e back-end com Node.js e PostgreSQL. Experiência em arquiteturas Micro Frontend com Module Federation, containerização com Docker e gerenciamento de infraestrutura com Caddy e Portainer. Graduando em Engenharia da Computação pela UFMA.
+							Desenvolvedor Full Stack Pleno com experiência em TypeScript,
+							React.js, Next.js e Node.js, com atuação em plataformas SaaS,
+							arquitetura de micro frontends com Module Federation, integração
+							com microsserviços e infraestrutura com Docker. Graduando em
+							Engenharia da Computação pela UFMA, atualmente no 4º período.
 						</p>
 					</section>
 					<section id="experiences" className="flex flex-col gap-4">
-						<h2 className="custom_title sticky top-0 border-border border-b border-solid bg-background py-2">
+						<h2 className="custom_title sticky top-0 border-brand/50 border-b border-solid bg-background py-2">
 							Experiências
 						</h2>
 						{experiencesArray.map(({ subtitle, ...props }) => (
@@ -34,7 +38,7 @@ const Home = () => {
 						))}
 					</section>
 					<section id="projects" className="flex flex-col gap-4">
-						<h2 className="custom_title sticky top-0 border-border border-b border-solid bg-background py-2">
+						<h2 className="custom_title sticky top-0 border-brand/50 border-b border-solid bg-background py-2">
 							Projetos
 						</h2>
 						{projectsArray.map(({ title, ...props }) => (
@@ -42,7 +46,7 @@ const Home = () => {
 						))}
 					</section>
 					<section id="education" className="flex flex-col gap-4">
-						<h2 className="custom_title sticky top-0 border-border border-b border-solid bg-background py-2">
+						<h2 className="custom_title sticky top-0 border-brand/50 border-b border-solid bg-background py-2">
 							Educação
 						</h2>
 						{educationArray.map(({ title, ...props }) => (
@@ -52,7 +56,7 @@ const Home = () => {
 				</div>
 			</main>
 		</div>
-	);
-};
+	)
+}
 
-export default Home;
+export default Home

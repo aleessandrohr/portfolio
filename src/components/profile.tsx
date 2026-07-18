@@ -1,9 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Icon } from "@/components/icon";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
+import { Icon } from '@/components/icon'
+import { ModeToggle } from '@/components/mode-toggle'
+import { Button } from '@/components/ui/button'
 import {
 	Card,
 	CardContent,
@@ -11,17 +11,17 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { menuItems } from "@/constants/menu-items";
-import { socialMedia } from "@/constants/social-media";
+} from '@/components/ui/card'
+import { menuItems } from '@/constants/menu-items'
+import { socialMedia } from '@/constants/social-media'
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "./ui/tooltip";
+} from './ui/tooltip'
 
-const socialMediaArray = Object.values(socialMedia);
+const socialMediaArray = Object.values(socialMedia)
 
 export const Profile = () => (
 	<Card className="flex h-full max-h-full w-full max-w-md flex-col justify-between gap-2 overflow-y-auto md:rounded-none">
@@ -73,4 +73,4 @@ export const Profile = () => (
 			<ModeToggle />
 		</CardFooter>
 	</Card>
-);
+)

@@ -49,6 +49,10 @@ const config: Config = {
 					DEFAULT: "hsl(var(--accent))",
 					foreground: "hsl(var(--accent-foreground))",
 				},
+				brand: {
+					DEFAULT: "hsl(var(--brand))",
+					foreground: "hsl(var(--brand-foreground))",
+				},
 				destructive: {
 					DEFAULT: "hsl(var(--destructive))",
 					foreground: "hsl(var(--destructive-foreground))",
@@ -86,6 +90,7 @@ const config: Config = {
 				".custom_title": {
 					fontSize: theme("fontSize.xl"),
 					fontWeight: theme("fontWeight.medium"),
+					color: theme("colors.brand.DEFAULT"),
 				},
 				".custom_description": {
 					fontSize: theme("fontSize.base"),
