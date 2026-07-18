@@ -1,4 +1,3 @@
-import { Icon } from '@/components/icon'
 import {
 	Card,
 	CardContent,
@@ -19,15 +18,6 @@ const skillBadgeStyles: Record<string, string> = {
 		'border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300',
 	'Next.js':
 		'border-zinc-500/30 bg-zinc-500/10 text-zinc-700 dark:text-zinc-200',
-	Vite: 'border-violet-500/30 bg-violet-500/10 text-violet-700 dark:text-violet-300',
-	'Context API':
-		'border-indigo-500/30 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300',
-	'React Query':
-		'border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300',
-	'TanStack Router':
-		'border-orange-500/30 bg-orange-500/10 text-orange-700 dark:text-orange-300',
-	'Tailwind CSS':
-		'border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300',
 	'Module Federation':
 		'border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300',
 	'Node.js':
@@ -58,45 +48,45 @@ export const Experience = ({
 	description,
 	skills,
 }: Props) => (
-	<Card className="flex w-full flex-col gap-2 md:flex-row">
-		<aside className="flex p-6 pb-0 font-light text-sm">
-			<div className="flex items-center justify-start self-start font-medium">
-				<span>{start}</span>
-				<Icon name="minus" />
-				<span>{end}</span>
-			</div>
-		</aside>
-		<section>
-			<CardHeader>
-				<CardTitle className="flex flex-col gap-1">
-					<span className="text-xl">{title}</span>
-					<span className="text-base">{subtitle}</span>
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<div className="custom_description flex flex-col gap-2">
-					{Array.isArray(description)
-						? description.map(item => <p key={item}>{item}</p>)
-						: description}
+	<Card className="group relative w-full overflow-hidden border-border/80 transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-brand/5 hover:shadow-xl">
+		<CardHeader className="gap-4 space-y-0 pb-4">
+			<div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+				<div className="min-w-0">
+					<CardTitle className="text-2xl leading-tight transition-colors group-hover:text-brand">
+						{title}
+					</CardTitle>
+					<p className="mt-2 font-medium text-muted-foreground text-sm">
+						{subtitle}
+					</p>
 				</div>
-			</CardContent>
-			{skills && (
-				<CardFooter>
-					<div className="flex flex-col gap-3">
-						<strong className="text-brand text-sm">Habilidades</strong>
-						<div className="flex flex-wrap gap-2">
-							{skills.map(skill => (
-								<span
-									className={`rounded-full border px-2.5 py-1 font-medium text-xs shadow-sm transition-transform duration-200 hover:-translate-y-0.5 ${skillBadgeStyles[skill] ?? defaultSkillBadgeStyle}`}
-									key={skill}
-								>
-									{skill}
-								</span>
-							))}
-						</div>
+				<span className="self-start whitespace-nowrap rounded-full border border-brand/25 bg-brand/5 px-3 py-1.5 font-medium text-brand text-xs">
+					{start} — {end}
+				</span>
+			</div>
+		</CardHeader>
+		<CardContent className="pb-5">
+			<div className="custom_description flex flex-col gap-3 text-left">
+				{Array.isArray(description)
+					? description.map(item => <p key={item}>{item}</p>)
+					: description}
+			</div>
+		</CardContent>
+		{skills && (
+			<CardFooter className="border-border/80 border-t pt-5">
+				<div className="flex flex-col gap-3">
+					<strong className="text-brand text-sm">Habilidades</strong>
+					<div className="flex flex-wrap gap-2">
+						{skills.map(skill => (
+							<span
+								className={`rounded-full border px-2.5 py-1 font-medium text-xs shadow-sm transition-transform duration-200 hover:-translate-y-0.5 ${skillBadgeStyles[skill] ?? defaultSkillBadgeStyle}`}
+								key={skill}
+							>
+								{skill}
+							</span>
+						))}
 					</div>
-				</CardFooter>
-			)}
-		</section>
+				</div>
+			</CardFooter>
+		)}
 	</Card>
 )

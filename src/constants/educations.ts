@@ -2,8 +2,8 @@ import type { Experience } from './experiences'
 
 export const education = {
 	ufma: {
-		start: '01/2025',
-		end: '01/2028',
+		start: '04/2025',
+		end: '04/2028',
 		title: 'Universidade Federal do Maranhão (UFMA)',
 		subtitle: 'Ciência e Tecnologia',
 		description: ['Graduação em Engenharia de Computação.'],
