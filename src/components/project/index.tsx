@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Play } from 'lucide-react'
 
 import { Icon } from '@/components/icon'
 import { Button } from '@/components/ui/button'
@@ -10,7 +11,13 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog'
 import type { Project as ProjectType } from '@/constants/projects'
 import { Iframe } from './components/iframe'
 
@@ -20,54 +27,82 @@ export const Project = ({
 	imageUrl,
 	title,
 	description,
+	category,
 	links,
 	iframeUrl,
 }: Props) => (
-	<Card className="flex w-full flex-col gap-2 md:flex-row">
-		<aside className="flex w-full flex-col justify-between gap-4 p-6 pb-0 md:max-w-64 md:pb-6">
-			<div className="w-full">
+	<Card className="group relative flex w-full min-w-0 flex-col overflow-hidden border-border/80 transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-brand/5 hover:shadow-xl lg:flex-row">
+		<aside className="relative min-h-60 overflow-hidden border-border/80 border-b bg-muted/30 p-3 lg:order-2 lg:min-h-full lg:w-[44%] lg:border-b-0 lg:border-l">
+			<div className="relative h-full min-h-52 w-full overflow-hidden rounded-xl border border-border/80">
 				<Image
 					src={imageUrl}
-					width={500}
-					height={500}
+					fill
 					alt={title}
-					className="w-full rounded-lg"
+					sizes="(min-width: 1024px) 360px, 100vw"
+					className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
 				/>
 			</div>
-			<div className="w-full">
+		</aside>
+		<section className="flex min-w-0 flex-1 flex-col">
+			<CardHeader className="gap-3 pb-3">
+				<CardTitle className="text-2xl leading-tight transition-colors group-hover:text-brand">
+					{title}
+				</CardTitle>
+				<CardDescription className="custom_description text-left">
+					{description}
+				</CardDescription>
+			</CardHeader>
+			<CardFooter className="mt-auto flex flex-col items-center gap-3 border-border/80 border-t pt-5 lg:grid lg:grid-cols-2">
 				<Dialog>
-					<DialogTrigger className="w-full" asChild>
-						<Button disabled={!iframeUrl}>Experimente clicando aqui!</Button>
+					<DialogTrigger asChild>
+						<Button className="w-full" disabled={!iframeUrl}>
+							<Play
+								className="mr-2 h-5 w-5 shrink-0"
+								aria-hidden="true"
+								strokeWidth={1.75}
+							/>
+							Demonstração
+						</Button>
 					</DialogTrigger>
 					{iframeUrl && (
-						<DialogContent className="h-[85vh] max-h-[85vh] w-[85vw] max-w-[85vw] rounded-lg">
-							<div className="relative w-full p-2">
+						<DialogContent className="h-[88vh] max-h-[88vh] w-[92vw] max-w-6xl grid-rows-[auto_1fr] gap-0 overflow-hidden border-brand/30 bg-card p-0 shadow-2xl shadow-brand/10">
+							<div className="flex items-center justify-between border-border/80 border-b bg-muted/40 px-4 py-3 sm:px-5">
+								<div className="flex min-w-0 items-center gap-3">
+									<div className="min-w-0">
+										<DialogTitle className="truncate font-semibold text-base">
+											{title}
+										</DialogTitle>
+										<DialogDescription className="truncate text-xs">
+											Demonstração · {category}
+										</DialogDescription>
+									</div>
+								</div>
+								{links[0] && (
+									<Link
+										className="mr-8 hidden items-center gap-2 rounded-md px-2 py-1.5 font-medium text-brand text-sm transition-colors hover:bg-brand/10 sm:inline-flex"
+										href={links[0]}
+										target="_blank"
+									>
+										Abrir site
+										<Icon name="arrow-up-right" className="h-4 w-4" />
+									</Link>
+								)}
+							</div>
+							<div className="min-h-0 bg-background p-2 sm:p-3">
 								<Iframe title={title} iframeUrl={iframeUrl} />
 							</div>
 						</DialogContent>
 					)}
 				</Dialog>
-			</div>
-		</aside>
-		<section className="w-full">
-			<CardHeader className="w-full">
-				<CardTitle className="flex flex-col gap-1">
-					<span className="text-xl">{title}</span>
-				</CardTitle>
-				<CardDescription className="custom_description">
-					{description}
-				</CardDescription>
-			</CardHeader>
-			<CardFooter className="flex w-full flex-col items-start gap-2 pt-2 text-secondary-foreground text-sm">
 				{links.map(link => (
 					<Link
 						key={link}
-						className="flex w-full items-center gap-2 text-brand transition-colors hover:text-brand/80"
+						className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-brand/40 bg-brand/5 px-2 py-2 font-medium text-brand text-sm transition-colors hover:bg-brand/10"
 						href={link}
 						target="_blank"
 					>
-						<span className="break-all underline">{link}</span>
-						<Icon name="external-link" className="h-5 w-5" />
+						Acessar projeto
+						<Icon name="arrow-up-right" className="h-4 w-4" />
 					</Link>
 				))}
 			</CardFooter>

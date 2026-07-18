@@ -15,7 +15,7 @@ const Home = () => {
 			<aside className="md:h-dvh md:rounded-r-lg">
 				<Profile />
 			</aside>
-			<main className="md:custom_container flex w-full flex-col md:h-dvh md:overflow-y-auto md:py-0">
+			<main className="md:custom_container flex w-full min-w-0 flex-col md:h-dvh md:overflow-y-auto md:py-0">
 				<div className="relative flex w-full max-w-screen-sm flex-col gap-8 self-end py-4">
 					<section id="resume" className="flex flex-col gap-4">
 						<h2 className="custom_title sticky top-0 border-brand/50 border-b border-solid bg-background py-2">
