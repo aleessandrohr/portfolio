@@ -1,67 +1,94 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Menu } from 'lucide-react'
 
 import { Icon } from '@/components/icon'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Button } from '@/components/ui/button'
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card'
-import { menuItems } from '@/constants/menu-items'
-import { socialMedia } from '@/constants/social-media'
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from '@/components/ui/drawer'
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from './ui/tooltip'
+} from '@/components/ui/tooltip'
+import { menuItems } from '@/constants/menu-items'
+import { socialMedia } from '@/constants/social-media'
 
 const socialMediaArray = Object.values(socialMedia)
 
 export const Profile = () => (
-	<Card className="flex h-full max-h-full w-full max-w-md flex-col justify-between gap-2 overflow-y-auto md:rounded-none">
-		<div>
-			<CardHeader>
-				<CardTitle className="flex flex-col gap-2 text-center">
-					<picture className="my-4 flex h-full w-full items-center justify-center">
-						<Image
-							src="/static/assets/profile.jpg"
-							alt="Profile"
-							width={480}
-							height={480}
-							className="h-40 w-40 rounded-full object-cover"
-						/>
-					</picture>
-					<span className="font-bold text-2xl">Alessandro Henrique Ramos</span>
-					<span className="text-xl">Desenvolvedor FullStack Pleno</span>
-				</CardTitle>
-				<CardDescription className="custom_description">
-					Olá! Meu nome é Alessandro Henrique Ramos e sou Desenvolvedor
-					FullStack Pleno com experiência em TypeScript, React e Node.js.
-				</CardDescription>
-			</CardHeader>
-			<CardContent className="flex flex-col gap-2">
-				{menuItems.map(({ href, value }) => (
-					<Button asChild key={value}>
-						<Link href={href}>{value}</Link>
-					</Button>
-				))}
-			</CardContent>
+	<Drawer>
+		<nav className="sticky top-3 isolate z-40 w-full overflow-hidden rounded-xl border border-white/10 bg-background/60 p-3 shadow-[0_8px_32px_rgba(0,0,0,0.18)] backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:via-transparent before:to-transparent">
+		<div className="relative z-10 flex min-w-0 items-center gap-3">
+			<Image
+				src="/static/assets/profile.jpg"
+				alt="Alessandro Henrique Ramos"
+				width={96}
+				height={96}
+				className="h-11 w-11 shrink-0 rounded-full border-2 border-brand/40 object-cover"
+			/>
+			<div className="min-w-0 flex-1">
+				<p className="truncate font-semibold text-sm">Alessandro Henrique Ramos</p>
+				<p className="truncate text-muted-foreground text-xs">
+					Desenvolvedor Full Stack Pleno
+				</p>
+			</div>
+			<div className="hidden lg:block">
+				<ModeToggle />
+			</div>
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<DrawerTrigger asChild>
+							<Button
+								aria-label="Abrir menu"
+								className="shrink-0 lg:hidden"
+								size="icon"
+								variant="outline"
+							>
+								<Menu className="h-5 w-5" />
+							</Button>
+						</DrawerTrigger>
+					</TooltipTrigger>
+					<TooltipContent>Menu</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 		</div>
-		<CardFooter className="flex flex-wrap justify-between gap-2">
-			<div className="flex gap-2">
+		<div className="relative z-10 mt-3 hidden items-center justify-between gap-3 border-white/10 border-t pt-2 lg:flex">
+			<div className="flex min-w-0 gap-1 overflow-x-auto">
+				{menuItems.map(({ href, value }) => (
+					<Link
+						className="whitespace-nowrap rounded-md px-3 py-2 font-medium text-muted-foreground text-sm transition-colors hover:bg-brand/10 hover:text-brand"
+						href={href}
+						key={value}
+					>
+						{value}
+					</Link>
+				))}
+			</div>
+			<div className="hidden shrink-0 gap-1 lg:flex">
 				{socialMediaArray.map(({ href, name, icon }) => (
 					<TooltipProvider key={name}>
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<Button asChild variant="outline" size="icon">
+								<Button
+									asChild
+									className="h-9 w-9 hover:bg-brand/10 hover:text-brand"
+									size="icon"
+									variant="ghost"
+								>
 									<Link href={href} aria-label={name} target="_blank">
-										<Icon name={icon} />
+										<Icon name={icon} className="h-4 w-4" />
 									</Link>
 								</Button>
 							</TooltipTrigger>
@@ -70,7 +97,49 @@ export const Profile = () => (
 					</TooltipProvider>
 				))}
 			</div>
-			<ModeToggle />
-		</CardFooter>
-	</Card>
+		</div>
+		</nav>
+
+			<DrawerContent className="border-brand/30 bg-background/95 backdrop-blur-2xl lg:hidden">
+				<DrawerHeader className="text-left">
+					<DrawerTitle>Navegação</DrawerTitle>
+					<DrawerDescription>
+						Acesse rapidamente as seções do portfólio.
+					</DrawerDescription>
+				</DrawerHeader>
+				<div className="grid gap-2 p-4 pt-0">
+					{menuItems.map(({ href, value }) => (
+						<DrawerClose asChild key={value}>
+							<Link
+								className="rounded-lg border border-border/80 px-4 py-3 font-medium text-foreground transition-colors hover:border-brand/40 hover:bg-brand/10 hover:text-brand"
+								href={href}
+							>
+								{value}
+							</Link>
+						</DrawerClose>
+					))}
+				</div>
+				<DrawerFooter className="border-border/80 border-t pt-4">
+					<div className="flex items-center justify-between gap-3">
+						<div className="flex gap-2">
+							{socialMediaArray.map(({ href, name, icon }) => (
+								<TooltipProvider key={name}>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Button asChild size="icon" variant="outline">
+												<Link href={href} aria-label={name} target="_blank">
+													<Icon name={icon} />
+												</Link>
+											</Button>
+										</TooltipTrigger>
+										<TooltipContent>{name}</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
+							))}
+						</div>
+						<ModeToggle />
+					</div>
+				</DrawerFooter>
+			</DrawerContent>
+	</Drawer>
 )
