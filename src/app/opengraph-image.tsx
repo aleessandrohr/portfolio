@@ -40,7 +40,7 @@ export default function OpenGraphImage() {
 				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '44px' }}>
-					<span style={{ fontSize: '168px', fontWeight: 800, lineHeight: 1 }}>
+					<span style={{ fontSize: '152px', fontWeight: 800, lineHeight: 1 }}>
 						Alessandro Henrique Ramos
 					</span>
 					<span style={{ color: '#93c5fd', fontSize: '80px', fontWeight: 700 }}>

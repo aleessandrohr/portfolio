@@ -65,7 +65,7 @@ export const Project = ({
 						</Button>
 					</DialogTrigger>
 					{iframeUrl && (
-						<DialogContent className="h-[88vh] max-h-[88vh] w-[92vw] max-w-6xl grid-rows-[auto_1fr] gap-0 overflow-hidden border-brand/30 bg-card p-0 shadow-2xl shadow-brand/10">
+						<DialogContent className="top-2 left-2 h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-none translate-x-0 translate-y-0 grid-rows-[auto_1fr] gap-0 overflow-hidden border-brand/30 bg-card p-0 shadow-2xl shadow-brand/10 sm:top-[50%] sm:left-[50%] sm:h-[88dvh] sm:max-h-[88dvh] sm:w-[92vw] sm:max-w-6xl sm:translate-x-[-50%] sm:translate-y-[-50%]">
 							<div className="flex items-center justify-between border-border/80 border-b bg-muted/40 px-4 py-3 sm:px-5">
 								<div className="flex min-w-0 items-center gap-3">
 									<div className="min-w-0">
