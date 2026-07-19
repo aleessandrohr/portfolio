@@ -11,7 +11,7 @@ export const experiences = {
 	anuntech: {
 		start: '07/2024',
 		end: '06/2026',
-		title: 'Desenvolvedor FullStack Pleno',
+		title: 'Desenvolvedor Full Stack Pleno',
 		subtitle: 'Anuntech | Integral | Remota | São Paulo',
 		description: [
 			'Atuei no desenvolvimento e manutenção do Workspace, plataforma SaaS corporativa com arquitetura de micro frontends em React.js e Module Federation, integrada a microsserviços em Node.js e PostgreSQL.',
