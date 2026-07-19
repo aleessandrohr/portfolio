@@ -45,7 +45,7 @@ export default function OpenGraphImage() {
 						Desenvolvedor Full Stack Pleno
 					</span>
 					<span style={{ color: '#d4d4d8', fontSize: '56px', lineHeight: 1.4 }}>
-						TypeScript · React.js · Next.js · Node.js · Micro Frontends · Microsserviços · Docker
+						TypeScript · React.js · Next.js · Node.js · Micro Frontends · Module Federation · Microsserviços · Docker
 					</span>
 				</div>
 

@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] })
 const siteUrl = 'https://aleessandrohr.dev.br'
 const title = 'Alessandro Henrique Ramos | Desenvolvedor Full Stack Pleno'
 const description =
-	'Desenvolvedor Full Stack Pleno com experiência em TypeScript, React.js, Next.js, Node.js, SaaS, micro frontends, microsserviços e Docker. Graduando em Engenharia da Computação pela UFMA.'
+	'Desenvolvedor Full Stack Pleno com experiência em TypeScript, React.js, Next.js, Node.js, SaaS, micro frontends, Module Federation, microsserviços e Docker. Graduando em Engenharia da Computação pela UFMA.'
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
