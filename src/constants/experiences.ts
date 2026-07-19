@@ -15,7 +15,7 @@ export const experiences = {
 		subtitle: 'Anuntech | Integral | Remota | São Paulo',
 		description: [
 			'Atuei no desenvolvimento e manutenção do Workspace, plataforma SaaS corporativa com arquitetura de micro frontends em React.js e Module Federation, integrada a microsserviços em Node.js e PostgreSQL.',
-			'Implementei o módulo Bookmarks, principal ferramenta de organização do Workspace, com foco em atalhos, navegação personalizada e produtividade.',
+			'Implementei o módulo bookmarks, principal ferramenta de organização do Workspace, com foco em atalhos, navegação personalizada e produtividade.',
 			'Desenvolvi o módulo de notificações em tempo real com Socket.io, permitindo a comunicação de eventos entre membros conectados à plataforma.',
 			'Atuei na operação da infraestrutura com Docker, Portainer, Cloudflare e Caddy.',
 			'Fui promovido de Desenvolvedor Front-end Júnior para Desenvolvedor FullStack Pleno, ampliando meu escopo de atuação em produto, arquitetura e infraestrutura.',
