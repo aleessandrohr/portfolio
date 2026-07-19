@@ -32,20 +32,29 @@ export default function OpenGraphImage() {
 							background: '#3b82f6',
 						}}
 					/>
-					<span style={{ fontSize: '48px', letterSpacing: '0.12em' }}>
+					<span
+						style={{ fontSize: '48px', fontWeight: 700, letterSpacing: '0.12em' }}
+					>
 						PORTFÓLIO
 					</span>
 				</div>
 
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '44px' }}>
-					<span style={{ fontSize: '152px', fontWeight: 700, lineHeight: 1 }}>
+					<span style={{ fontSize: '168px', fontWeight: 800, lineHeight: 1 }}>
 						Alessandro Henrique Ramos
 					</span>
-					<span style={{ color: '#93c5fd', fontSize: '76px', fontWeight: 600 }}>
+					<span style={{ color: '#93c5fd', fontSize: '80px', fontWeight: 700 }}>
 						Desenvolvedor Full Stack Pleno
 					</span>
-					<span style={{ color: '#d4d4d8', fontSize: '56px', lineHeight: 1.4 }}>
-						TypeScript · React.js · Next.js · Node.js · Micro Frontends · Module Federation · Microsserviços · Docker
+					<span
+						style={{
+							color: '#d4d4d8',
+							fontSize: '64px',
+							fontWeight: 600,
+							lineHeight: 1.3,
+						}}
+					>
+						TypeScript · React.js · Next.js · Node.js
 					</span>
 				</div>
 
