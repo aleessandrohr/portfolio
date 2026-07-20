@@ -101,6 +101,8 @@ const personJsonLd = {
 	],
 }
 
+const personJsonLdString = JSON.stringify(personJsonLd).replace(/</g, '\\u003c')
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -111,7 +113,8 @@ export default function RootLayout({
 			<body>
 				<script
 					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: The static JSON-LD is serialized locally and escaped to prevent script-tag injection.
+					dangerouslySetInnerHTML={{ __html: personJsonLdString }}
 				/>
 				<ThemeProvider attribute="class" defaultTheme="system">
 					{children}
