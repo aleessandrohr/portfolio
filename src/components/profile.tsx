@@ -31,7 +31,7 @@ export const Profile = () => (
 		<nav className="sticky top-3 isolate z-40 w-full overflow-hidden rounded-xl border border-white/10 bg-background/60 p-3 shadow-[0_8px_32px_rgba(0,0,0,0.18)] backdrop-blur-2xl before:pointer-events-none before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-white/10 before:via-transparent before:to-transparent">
 		<div className="relative z-10 flex min-w-0 items-center gap-3">
 			<Image
-				src="/static/assets/profile.jpg"
+				src="/static/assets/profile.png"
 				alt="Alessandro Henrique Ramos"
 				width={96}
 				height={96}
