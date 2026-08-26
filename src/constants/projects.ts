@@ -1,4 +1,5 @@
 export interface Project {
+	id: string
 	imageUrl: string
 	title: string
 	description: string
@@ -9,6 +10,7 @@ export interface Project {
 
 export const projects = {
 	'in.orbit': {
+		id: 'inorbit',
 		imageUrl: '/static/assets/in-orbit.png',
 		title: 'in.orbit',
 		category: 'Produtividade pessoal',
@@ -17,6 +19,7 @@ export const projects = {
 		iframeUrl: 'https://inorbit.aleessandrohr.dev.br/demo',
 	},
 	letmeask: {
+		id: 'letmeask',
 		imageUrl: '/static/assets/letmeask.png',
 		title: 'Letmeask',
 		category: 'Comunidade e interação',
