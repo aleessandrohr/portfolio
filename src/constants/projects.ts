@@ -14,7 +14,7 @@ export const projects = {
 		category: 'Produtividade pessoal',
 		description: 'Aplicação web para rastreamento de metas e hábitos semanais.',
 		links: ['https://inorbit.aleessandrohr.dev.br'],
-		iframeUrl: 'https://inorbit.aleessandrohr.dev.br',
+		iframeUrl: 'https://inorbit.aleessandrohr.dev.br/demo',
 	},
 	letmeask: {
 		imageUrl: '/static/assets/letmeask.png',
@@ -23,6 +23,5 @@ export const projects = {
 		description:
 			'Aplicação web para criação e gestão de salas de perguntas e respostas em tempo real.',
 		links: ['https://letmeask.aleessandrohr.dev.br'],
-		iframeUrl: 'https://letmeask.aleessandrohr.dev.br',
 	},
 } as const satisfies Record<string, Project>

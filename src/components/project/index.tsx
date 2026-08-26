@@ -1,6 +1,6 @@
+import { Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Play } from 'lucide-react'
 
 import { Icon } from '@/components/icon'
 import { Button } from '@/components/ui/button'
@@ -52,19 +52,21 @@ export const Project = ({
 					{description}
 				</CardDescription>
 			</CardHeader>
-			<CardFooter className="mt-auto flex flex-col items-center gap-3 border-border/80 border-t pt-5 lg:grid lg:grid-cols-2">
-				<Dialog>
-					<DialogTrigger asChild>
-						<Button className="w-full" disabled={!iframeUrl}>
-							<Play
-								className="mr-2 h-5 w-5 shrink-0"
-								aria-hidden="true"
-								strokeWidth={1.75}
-							/>
-							Demonstração
-						</Button>
-					</DialogTrigger>
-					{iframeUrl && (
+			<CardFooter
+				className={`mt-auto flex flex-col items-center gap-3 border-border/80 border-t pt-5 ${iframeUrl ? 'lg:grid lg:grid-cols-2' : 'lg:grid lg:grid-cols-1'}`}
+			>
+				{iframeUrl && (
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button className="w-full">
+								<Play
+									className="mr-2 h-5 w-5 shrink-0"
+									aria-hidden="true"
+									strokeWidth={1.75}
+								/>
+								Demonstração
+							</Button>
+						</DialogTrigger>
 						<DialogContent className="top-2 left-2 h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-none translate-x-0 translate-y-0 grid-rows-[auto_1fr] gap-0 overflow-hidden border-brand/30 bg-card p-0 shadow-2xl shadow-brand/10 sm:top-[50%] sm:left-[50%] sm:h-[88dvh] sm:max-h-[88dvh] sm:w-[92vw] sm:max-w-6xl sm:translate-x-[-50%] sm:translate-y-[-50%]">
 							<div className="flex items-center justify-between border-border/80 border-b bg-muted/40 px-4 py-3 sm:px-5">
 								<div className="flex min-w-0 items-center gap-3">
@@ -92,8 +94,8 @@ export const Project = ({
 								<Iframe title={title} iframeUrl={iframeUrl} />
 							</div>
 						</DialogContent>
-					)}
-				</Dialog>
+					</Dialog>
+				)}
 				{links.map(link => (
 					<Link
 						key={link}
