@@ -3,7 +3,7 @@ import type { Project } from '@/types/project'
 export const projects = {
 	workspace: {
 		id: 'workspace',
-		title: 'Workspace',
+		title: 'Workspace Anuntech',
 		category: 'Plataforma SaaS corporativa',
 		description:
 			'Arquitetura modular com Module Federation, tendo o módulo de bookmarks como principal ferramenta de produtividade.',
