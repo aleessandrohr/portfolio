@@ -104,17 +104,18 @@ export default function RootLayout({
 	return (
 		<html
 			lang="pt-BR"
-			className={`${inter.className} ${mono.variable} overflow-x-clip`}
+			className={`${inter.className} ${mono.variable}`}
 			suppressHydrationWarning
 		>
-			<body className="overflow-x-clip">
+			<body>
 				<script
 					type="application/ld+json"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: The static JSON-LD is serialized locally and escaped to prevent script-tag injection.
 					dangerouslySetInnerHTML={{ __html: personJsonLdString }}
 				/>
 				<ThemeProvider attribute="class" defaultTheme="system">
-					{children}
+					{/* Contém o que vaza na horizontal sem tocar em html/body: com overflow ali, o bloqueio de rolagem dos menus (modais) quebra o header sticky. */}
+					<div className="overflow-x-clip">{children}</div>
 				</ThemeProvider>
 			</body>
 		</html>

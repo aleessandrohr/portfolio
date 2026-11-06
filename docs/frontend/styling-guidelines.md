@@ -26,8 +26,9 @@ O `/curriculo` terá um bloco `@media print` em `globals.css`:
 Use `print:hidden` nos elementos que não devem sair no papel.
 
 ## Sem scroll horizontal
-- **A página nunca rola na horizontal.** `html` e `body` usam `overflow-x-clip` como rede de segurança, mas o elemento que ultrapassa a largura deve ser contido na origem (ex.: a grade decorativa do hero fica dentro de um contêiner com `overflow-hidden`).
+- **A página nunca rola na horizontal.** O `layout.tsx` envolve o conteúdo num `div` com `overflow-x-clip` como rede de segurança, e o elemento que ultrapassa a largura deve ser contido na origem (ex.: a grade decorativa do hero fica dentro de um contêiner com `overflow-hidden`). **Não coloque `overflow` em `html` nem em `body`:** o bloqueio de rolagem dos menus modais (dropdown de tema, drawer) aplica `overflow: hidden` no `body`, e com `html` também restrito o `body` vira contêiner de rolagem, o header `sticky` sai da tela e a posição pula.
 - **Verificação:** compare `document.documentElement.scrollWidth` com `innerWidth` em 320, 360, 390, 414, 600, 768, 1024, 1280 e 1536 px, nos temas claro e escuro. Elementos com `blur`, `scale` ou margens negativas são os suspeitos mais comuns.
+- **Menus abertos com a página rolada:** teste o dropdown de tema e o drawer do celular depois de rolar (ex.: 1500 px). O header deve continuar em `top: 12px` e `scrollY` não pode mudar.
 
 ## Estilos da home
 

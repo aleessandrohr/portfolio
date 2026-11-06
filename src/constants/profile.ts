@@ -12,7 +12,7 @@ export const profile = {
 	email: 'alessandro.henri.r@gmail.com',
 	siteUrl: 'https://aleessandrohr.dev.br',
 	heroPhrase:
-		'Desenvolvo software com TypeScript, React.js e Node.js, com atuação em arquitetura de sistemas, infraestrutura e soluções com IA.',
+		'Desenvolvo aplicações com TypeScript, React.js e Node.js, com atuação em arquitetura de sistemas, infraestrutura e soluções com IA.',
 	summary:
 		'Desenvolvedor Full Stack Pleno com atuação em TypeScript, especializado em front-end com React.js e Next.js e back-end com Node.js e PostgreSQL. Experiência no desenvolvimento de software com arquitetura de micro frontends em Module Federation, integração com microsserviços, atuação em infraestrutura e soluções com IA. Graduando em Engenharia da Computação pela UFMA.',
 	seoDescription:

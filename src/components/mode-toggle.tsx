@@ -21,7 +21,7 @@ export const ModeToggle = () => {
 	const { setTheme } = useTheme()
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu modal={false}>
 			<TooltipProvider>
 				<Tooltip>
 					<TooltipTrigger asChild>
