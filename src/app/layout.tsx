@@ -1,37 +1,37 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import { openGraphConfig } from '@/configs/open-graph'
+import { educations } from '@/constants/educations'
+import { profile } from '@/constants/profile'
+import { seoKeywords, seoTopics } from '@/constants/seo'
 import { ThemeProvider } from '@/providers/theme'
 
 const inter = Inter({ subsets: ['latin'] })
-const siteUrl = 'https://aleessandrohr.dev.br'
-const title = 'Alessandro Henrique Ramos | Desenvolvedor Full Stack Pleno'
-const description =
-	'Desenvolvedor Full Stack Pleno com experiência em TypeScript, React.js, Next.js, Node.js, micro frontends, Module Federation, microsserviços e Docker. Graduando em Engenharia da Computação pela UFMA.'
+const mono = JetBrains_Mono({
+	subsets: ['latin'],
+	variable: '--font-mono',
+	display: 'swap',
+})
+const siteUrl = profile.siteUrl
+const title = `${profile.fullName} | ${profile.role}`
+const description = profile.seoDescription
 
 export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	title: {
 		default: title,
-		template: '%s | Alessandro Henrique Ramos',
+		template: `%s | ${profile.fullName}`,
 	},
 	description,
-	applicationName: 'Portfólio de Alessandro Henrique Ramos',
-	authors: [{ name: 'Alessandro Henrique Ramos', url: siteUrl }],
-	creator: 'Alessandro Henrique Ramos',
-	publisher: 'Alessandro Henrique Ramos',
-	keywords: [
-		'Desenvolvedor Full Stack',
-		'TypeScript',
-		'React.js',
-		'Next.js',
-		'Node.js',
-		'Micro Frontends',
-		'Module Federation',
-		'Docker',
-		'Desenvolvedor São Luís',
-		'Portfólio desenvolvedor',
-	],
+	applicationName: `Portfólio de ${profile.fullName}`,
+	authors: [{ name: profile.fullName, url: siteUrl }],
+	creator: profile.fullName,
+	publisher: profile.fullName,
+	keywords: seoKeywords,
+	icons: {
+		icon: [{ url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' }],
+	},
 	category: 'technology',
 	classification: 'Portfólio profissional de desenvolvimento de software',
 	alternates: {
@@ -52,15 +52,14 @@ export const metadata: Metadata = {
 		title,
 		description,
 		url: '/',
-		siteName: 'Portfólio de Alessandro Henrique Ramos',
+		siteName: `Portfólio de ${profile.fullName}`,
 		locale: 'pt_BR',
 		type: 'profile',
 		images: [
 			{
 				url: '/opengraph-image',
-				width: 2400,
-				height: 1260,
-				alt: 'Alessandro Henrique Ramos, Desenvolvedor Full Stack Pleno',
+				...openGraphConfig.size,
+				alt: `${profile.fullName}, ${profile.role}`,
 			},
 		],
 	},
@@ -74,31 +73,25 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
 	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: '#ffffff' },
-		{ media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+		{ media: '(prefers-color-scheme: light)', color: '#f9f9f9' },
+		{ media: '(prefers-color-scheme: dark)', color: '#131313' },
 	],
 }
 
 const personJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
-	name: 'Alessandro Henrique Ramos',
+	name: profile.fullName,
 	url: siteUrl,
-	jobTitle: 'Desenvolvedor Full Stack Pleno',
+	jobTitle: profile.role,
 	description,
 	image: `${siteUrl}/opengraph-image`,
-	sameAs: [
-		'https://www.linkedin.com/in/aleessandrohr/',
-		'https://github.com/aleessandrohr',
-	],
-	knowsAbout: [
-		'TypeScript',
-		'React.js',
-		'Next.js',
-		'Node.js',
-		'Module Federation',
-		'Docker',
-	],
+	alumniOf: {
+		'@type': 'CollegeOrUniversity',
+		name: educations.ufma.institution,
+	},
+	sameAs: [profile.links.linkedin.href, profile.links.github.href],
+	knowsAbout: seoTopics,
 }
 
 const personJsonLdString = JSON.stringify(personJsonLd).replace(/</g, '\\u003c')
@@ -109,8 +102,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="pt-BR" className={inter.className}>
-			<body>
+		<html
+			lang="pt-BR"
+			className={`${inter.className} ${mono.variable} overflow-x-clip`}
+			suppressHydrationWarning
+		>
+			<body className="overflow-x-clip">
 				<script
 					type="application/ld+json"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: The static JSON-LD is serialized locally and escaped to prevent script-tag injection.

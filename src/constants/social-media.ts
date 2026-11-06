@@ -1,25 +1,20 @@
-import type { DynamicIconImports } from '@/components/icon'
-
-interface SocialMedia {
-	href: string
-	name: string
-	icon: DynamicIconImports
-}
+import { profile } from '@/constants/profile'
+import type { SocialMedia } from '@/types/social-media'
 
 export const socialMedia = {
 	linkedin: {
-		href: 'https://www.linkedin.com/in/aleessandrohr/',
+		href: profile.links.linkedin.href,
 		name: 'LinkedIn',
 		icon: 'linkedin',
 	},
 	github: {
-		href: 'https://github.com/aleessandrohr',
+		href: profile.links.github.href,
 		name: 'Github',
 		icon: 'github',
 	},
-	cal: {
-		href: 'https://cal.com/aleessandrohr',
-		name: 'Reunião',
-		icon: 'calendar-clock',
+	email: {
+		href: `mailto:${profile.email}`,
+		name: 'E-mail',
+		icon: 'mail',
 	},
 } as const satisfies Record<string, SocialMedia>

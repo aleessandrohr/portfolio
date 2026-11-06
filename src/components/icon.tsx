@@ -1,15 +1,23 @@
-import type { LucideProps } from 'lucide-react'
-import dynamicIconImports from 'lucide-react/dynamicIconImports'
-import dynamic from 'next/dynamic'
+import {
+	Github,
+	Linkedin,
+	type LucideIcon,
+	type LucideProps,
+	Mail,
+} from 'lucide-react'
 
-export type DynamicIconImports = keyof typeof dynamicIconImports
+const icons = {
+	github: Github,
+	linkedin: Linkedin,
+	mail: Mail,
+} as const satisfies Record<string, LucideIcon>
 
-interface IconProps extends LucideProps {
-	name: DynamicIconImports
-}
+export type IconName = keyof typeof icons
 
-export const Icon = ({ name, ...props }: IconProps) => {
-	const LucideIcon = dynamic(dynamicIconImports[name])
+type Props = LucideProps & { name: IconName }
 
-	return <LucideIcon {...props} />
+export const Icon = ({ name, ...props }: Props) => {
+	const Component = icons[name]
+
+	return <Component {...props} />
 }
