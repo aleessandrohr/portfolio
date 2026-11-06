@@ -46,25 +46,28 @@ const getHistoryState = (
 
 export const CommandLine = () => {
 	const { isTerminal } = usePortfolioMode()
-	const { commands, history, lastEntry, runCommand } = useTerminalSession()
+	const { commands, outputs, history, lastEntry, runCommand } =
+		useTerminalSession()
 	const [prompt, setPrompt] = useState(INITIAL_PROMPT)
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const { input, historyIndex, completionRequested } = prompt
-	const options = getTerminalOptions(commands)
+	const options = getTerminalOptions(commands, outputs)
 	const suggestions = completionRequested
-		? completeTerminalCommand(input, commands)
+		? completeTerminalCommand(input, commands, outputs)
 		: []
 	const isHelpVisible = lastEntry?.result.type === 'help'
 	const choices = isHelpVisible
 		? options.filter(option => option.command !== terminalBuiltins.help.command)
 		: options.filter(option => suggestions.includes(option.command))
-	const feedback =
-		lastEntry?.result.type === 'error'
-			? lastEntry.result.message
-			: lastEntry
-				? `$ ${lastEntry.command}`
-				: ''
+	const result = lastEntry?.result
+	const feedbackLines = !lastEntry
+		? []
+		: result?.type === 'error'
+			? [result.message]
+			: result?.type === 'output'
+				? [`$ ${lastEntry.command}`, ...result.lines]
+				: [`$ ${lastEntry.command}`]
 
 	const execute = (command: string) => {
 		if (!command.trim()) return
@@ -76,7 +79,7 @@ export const CommandLine = () => {
 	}
 
 	const completeInput = () => {
-		const matches = completeTerminalCommand(input, commands)
+		const matches = completeTerminalCommand(input, commands, outputs)
 		if (matches.length === 0) return false
 
 		setPrompt(previous => ({
@@ -120,14 +123,22 @@ export const CommandLine = () => {
 			<p id="command-hints" className="mt-2 text-muted-foreground text-xs">
 				{terminalConfig.keyboardHint}
 			</p>
-			<p
+			<div
 				id="command-feedback"
 				role="status"
 				aria-live="polite"
 				className="mt-2 break-words text-muted-foreground text-xs"
 			>
-				{feedback}
-			</p>
+				{feedbackLines.map((line, index) => (
+					<p
+						// biome-ignore lint/suspicious/noArrayIndexKey: as linhas são fixas por resposta.
+						key={`${index}-${line}`}
+						className="whitespace-pre-wrap"
+					>
+						{line}
+					</p>
+				))}
+			</div>
 			{choices.length > 0 && (
 				<div className="mt-3 flex flex-wrap gap-1">
 					{choices.map(option => (

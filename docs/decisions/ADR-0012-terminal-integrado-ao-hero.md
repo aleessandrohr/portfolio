@@ -14,6 +14,10 @@ Preservar a estrutura da home e alternar apenas os rótulos de interface e a pre
 
 A página fornece uma lista tipada de comandos e destinos existentes. Um resolver puro em `utils/terminal-commands.ts` é usado pelo provider cliente; os links nativos registram o comando e preservam seu comportamento. O provider envolve apenas a home, pois header, hero, projetos e contato compartilham esse estado.
 
+## Atualização: comandos de consulta e gestão
+
+Em 2026-11-06, antes da fase 4, o autor pediu mais comandos Linux para consultar e gerenciar o site. Entraram `ls`, `ls projetos`, `whoami`, `cat sobre`, `history` e `theme dark|light|system`. O visual do prompt não mudou. As respostas de texto são derivadas de `profile`, da navegação e de `projects`; `theme` usa o `next-themes` já existente. Continuam sem shell, API ou sistema de arquivos: só comandos cadastrados são resolvidos.
+
 ## Alternativas consideradas
 
 | Opção | Benefícios | Custos |

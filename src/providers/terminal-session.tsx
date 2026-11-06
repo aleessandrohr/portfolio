@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import {
 	createContext,
 	type ReactNode,
@@ -12,6 +13,7 @@ import { terminalConfig } from '@/configs/terminal'
 import type {
 	TerminalCommand,
 	TerminalEntry,
+	TerminalOutput,
 	TerminalResult,
 } from '@/types/terminal'
 import {
@@ -19,13 +21,18 @@ import {
 	resolveTerminalCommand,
 } from '@/utils/terminal-commands'
 
-type Props = { children: ReactNode; commands: ReadonlyArray<TerminalCommand> }
+type Props = {
+	children: ReactNode
+	commands: ReadonlyArray<TerminalCommand>
+	outputs: ReadonlyArray<TerminalOutput>
+}
 type Session = {
 	history: ReadonlyArray<string>
 	lastEntry: TerminalEntry | null
 }
 type SessionContext = Session & {
 	commands: ReadonlyArray<TerminalCommand>
+	outputs: ReadonlyArray<TerminalOutput>
 	recordCommand: (input: string) => TerminalResult
 	runCommand: (input: string) => TerminalResult
 }
@@ -34,29 +41,47 @@ const INITIAL_SESSION: Session = { history: [], lastEntry: null }
 const TerminalSessionContext = createContext<SessionContext | null>(null)
 
 /** Mantém o resultado e o histórico de cliques e comandos em uma única sessão. */
-export const TerminalSessionProvider = ({ children, commands }: Props) => {
+export const TerminalSessionProvider = ({
+	children,
+	commands,
+	outputs,
+}: Props) => {
+	const { setTheme } = useTheme()
 	const [session, setSession] = useState(INITIAL_SESSION)
 
 	const recordCommand = useCallback(
 		(input: string) => {
 			const command = normalizeTerminalInput(input)
-			const result = resolveTerminalCommand(command, commands)
+			const result = resolveTerminalCommand(command, commands, outputs)
 			if (!command) return result
 
-			setSession(previous => ({
-				history: [...previous.history, command].slice(
+			setSession(previous => {
+				const history = [...previous.history, command].slice(
 					-terminalConfig.historyLimit
-				),
-				lastEntry: result.type === 'clear' ? null : { command, result },
-			}))
+				)
+				const shown: TerminalResult =
+					result.type === 'history'
+						? {
+								type: 'output',
+								lines: history.map((item, index) => `${index + 1}  ${item}`),
+							}
+						: result
+
+				return {
+					history,
+					lastEntry:
+						result.type === 'clear' ? null : { command, result: shown },
+				}
+			})
 			return result
 		},
-		[commands]
+		[commands, outputs]
 	)
 
 	const runCommand = useCallback(
 		(input: string) => {
 			const result = recordCommand(input)
+			if (result.type === 'theme') setTheme(result.command.theme)
 			if (result.type !== 'navigate') return result
 
 			const { href } = result.command
@@ -66,12 +91,12 @@ export const TerminalSessionProvider = ({ children, commands }: Props) => {
 
 			return result
 		},
-		[recordCommand]
+		[recordCommand, setTheme]
 	)
 
 	const value = useMemo(
-		() => ({ ...session, commands, recordCommand, runCommand }),
-		[session, commands, recordCommand, runCommand]
+		() => ({ ...session, commands, outputs, recordCommand, runCommand }),
+		[session, commands, outputs, recordCommand, runCommand]
 	)
 
 	return (

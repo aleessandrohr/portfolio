@@ -9,7 +9,10 @@ import { socialMedia } from '@/constants/social-media'
 import { PortfolioModeProvider } from '@/providers/portfolio-mode'
 import { TerminalSessionProvider } from '@/providers/terminal-session'
 import { sortExperiences } from '@/utils/experience-timeline'
-import { buildTerminalCommands } from '@/utils/terminal-commands'
+import {
+	buildTerminalCommands,
+	buildTerminalOutputs,
+} from '@/utils/terminal-commands'
 import { About } from './_components/about'
 import { Contact } from './_components/contact'
 import { Education } from './_components/education'
@@ -20,11 +23,13 @@ import { Projects } from './_components/projects'
 import { TerminalReturn } from './_components/terminal-return'
 
 export default function Home() {
-	const commands = buildTerminalCommands(profile, Object.values(projects))
+	const projectList = Object.values(projects)
+	const commands = buildTerminalCommands(profile, projectList)
+	const outputs = buildTerminalOutputs(profile, projectList)
 
 	return (
 		<PortfolioModeProvider>
-			<TerminalSessionProvider commands={commands}>
+			<TerminalSessionProvider commands={commands} outputs={outputs}>
 				<Header name={profile.displayName.split(' ')[0]} />
 				<HomeMotion>
 					<Hero profile={profile} socialMedia={Object.values(socialMedia)} />
