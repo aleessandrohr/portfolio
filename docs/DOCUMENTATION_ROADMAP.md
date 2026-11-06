@@ -10,6 +10,8 @@ Estrutura-alvo da pasta `docs/` e situação de cada documento. Um documento só
 
 As fases citadas são as do [plano de redesign](plans/redesign-portfolio.md).
 
+**Situação em 05/11/2026:** fases 1 (fonte única de dados) e 2 (layout e home) concluídas. O plano registra o escopo entregue e os ajustes da renovação guiada. Cases, currículo/PDF e terminal funcional seguem planejados nas fases 3, 4 e 5, respectivamente.
+
 ## Estrutura
 
 ```
@@ -44,15 +46,16 @@ docs/
 │   └── ui-ux-guidelines.md                ✅
 │
 ├── backend/
-│   ├── application-structure.md           ⏳
-│   ├── api-design.md                      ⏳
+│   ├── application-structure.md           ➖
+│   ├── api-design.md                      ➖
 │   ├── database-guidelines.md             ➖
 │   ├── business-logic.md                  ➖
 │   ├── authentication-and-authorization.md ➖
-│   └── integrations.md                    ⏳
+│   └── integrations.md                    ➖
 │
 ├── standards/
 │   ├── coding-standards.md                ✅
+│   ├── code-structure.md                  ✅
 │   ├── content-guidelines.md              ✅
 │   ├── code-style.md                      🔀
 │   ├── code-quality.md                    🔀
@@ -76,14 +79,15 @@ docs/
 │
 ├── operations/
 │   ├── development-setup.md               ✅
-│   ├── environment-configuration.md       ⏳
+│   ├── environment-configuration.md       ➖
 │   ├── build-and-deployment.md            ✅
 │   ├── migrations.md                      ➖
 │   └── troubleshooting.md                 ✅
 │
 └── decisions/
     ├── README.md                          ✅
-    └── ADR-0001-template.md               ✅
+    ├── ADR-0001-template.md               ✅
+    └── ADR-0006-motion.md                 ✅
 ```
 
 ## Pendentes e gatilhos
@@ -91,12 +95,13 @@ docs/
 | Documento | Status | Gatilho / destino |
 |---|---|---|
 | `frontend/code-organization.md` | 🔀 | Em [frontend/application-structure](frontend/application-structure.md) e [standards/file-and-folder-conventions](standards/file-and-folder-conventions.md). |
-| `backend/application-structure.md` | ⏳ | Fase 6. Primeira rota de servidor (`app/api/ask`) e `lib/llm/*`. |
-| `backend/api-design.md` | ⏳ | Fase 6. Contrato de `POST /api/ask` (corpo, streaming, códigos de erro). |
-| `backend/database-guidelines.md` | ➖ | Não há banco. O Redis da Fase 6 guarda só contadores e limites e entra em `integrations.md`. |
+| `backend/` (pasta) | ➖ | Não há código de servidor próprio. O assistente com LLM, que criaria a primeira rota, foi descartado ([ADR-0003](decisions/ADR-0003-gemini-upstash.md)). Se uma rota surgir, estes documentos passam a ser necessários. |
+| `backend/application-structure.md` | ➖ | Sem rotas de servidor. |
+| `backend/api-design.md` | ➖ | Sem API própria. |
+| `backend/database-guidelines.md` | ➖ | Não há banco. |
 | `backend/business-logic.md` | ➖ | Não há regra de negócio no servidor. As regras de conteúdo ficam em [standards/content-guidelines](standards/content-guidelines.md). |
-| `backend/authentication-and-authorization.md` | ➖ | Site público, sem login. A proteção da API (rate limit, origem) entra em `api-design.md` e em [security-guidelines](standards/security-guidelines.md). |
-| `backend/integrations.md` | ⏳ | Fase 6. Gemini (`@google/genai`) e Upstash Redis. |
+| `backend/authentication-and-authorization.md` | ➖ | Site público, sem login. A falta de autenticação foi o motivo de descartar o assistente com LLM. |
+| `backend/integrations.md` | ➖ | Não há integração com serviço externo. |
 | `standards/code-style.md` | 🔀 | Em [coding-standards](standards/coding-standards.md) e [lint-and-format](standards/lint-and-format.md). |
 | `standards/code-quality.md` | 🔀 | Em [coding-standards](standards/coding-standards.md) e [definition-of-done](development/definition-of-done.md). |
 | `standards/testing-guidelines.md` | ⏳ | Fase 5, quando `components/terminal/commands.ts` (puro e testável) trouxer o primeiro teste. Hoje não há testes: o CI roda lint, type-check e build. |
@@ -105,16 +110,13 @@ docs/
 | `product/business-rules.md` | 🔀 | Em [standards/content-guidelines](standards/content-guidelines.md) (o que pode ser publicado). |
 | `product/user-flows.md` | ➖ | Os fluxos atuais são triviais; os planejados estão no [plano](plans/redesign-portfolio.md). |
 | `product/permissions-and-roles.md` | ➖ | Não há usuários nem papéis. |
-| `operations/environment-configuration.md` | ⏳ | Fase 6, quando surgirem as primeiras variáveis de ambiente (`GEMINI_API_KEY`, Upstash, tetos de custo). Hoje o projeto não usa nenhuma. |
+| `operations/environment-configuration.md` | ➖ | O projeto não usa variáveis de ambiente. |
 | `operations/migrations.md` | ➖ | Não há banco nem schema. |
 
-## ADRs a registrar
-Decisões já tomadas que merecem um ADR em `decisions/`, com o [template](decisions/ADR-0001-template.md):
+## ADRs
+Todos os registros de decisão estão em [decisions/](decisions/README.md). A sequência está completa de 0001 a 0007: o 0001 é o template e os demais seguem o índice do README.
 
-- ADR-0002: constants como fonte única de dados (home, cases, currículo, terminal, LLM).
-- ADR-0003: Gemini como provedor da LLM, com Upstash para limites na Vercel.
-- ADR-0004: educação sem página própria, por enquanto.
-- ADR-0005: currículo em PDF gerado a partir da página `/curriculo`.
+Ao tomar uma nova decisão estrutural, crie o próximo número livre com o [template](decisions/ADR-0001-template.md).
 
 ## Manutenção
 - **Ao concluir uma fase do plano:** atualizar os documentos afetados e este roadmap.

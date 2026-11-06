@@ -2,7 +2,7 @@
 
 | Elemento | Convenção | Exemplo |
 |---|---|---|
-| Arquivo de componente | kebab-case | `mode-toggle.tsx`, `site-header.tsx` |
+| Arquivo de componente | kebab-case | `mode-toggle.tsx`, `header.tsx` |
 | Pasta de componente com subpartes | kebab-case + `index.tsx` | `project/index.tsx` |
 | Componente | PascalCase, exportação nomeada | `ModeToggle`, `Project` |
 | Arquivo de constants | kebab-case, plural | `experiences.ts`, `social-media.ts` |
@@ -16,6 +16,6 @@
 | Handler | `handle...` ou verbo | `syncDemoWithHash` |
 | `id` e `slug` de projeto | minúsculo, sem espaço, estável (usado em URL e hash) | `inorbit`, `digitaliza-ai` |
 | Rota | português, minúsculo, hífen | `/projetos`, `/curriculo` |
-| Variável de ambiente | MAIÚSCULAS com `_` | `GEMINI_API_KEY` |
+| Variável de ambiente | MAIÚSCULAS com `_` | `SITE_URL` |
 
 O `id` e o `slug` não mudam depois de publicados: links compartilhados (`#inorbit-demo`, `/projetos/<slug>`) dependem deles.

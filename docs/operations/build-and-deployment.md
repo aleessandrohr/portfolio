@@ -2,10 +2,11 @@
 
 ## Build
 - `bun run build` executa `next build`.
+- Se houver um servidor de desenvolvimento ativo, preserve a instância da porta 3000, conforme [ambiente de desenvolvimento](development-setup.md). Não execute `next build` no mesmo diretório de saída (`.next`) usado por ela. Valide o build em uma cópia temporária isolada do projeto, sem copiar `.env*`, `.git`, `.next` ou `node_modules`; use as dependências locais por link simbólico. Não inicie outro servidor para essa validação.
 - **`next.config.mjs`:**
   - `typescript.ignoreBuildErrors: true`: erro de tipo não falha o build, e quem barra é o `type-check`;
   - `eslint.ignoreDuringBuilds: true`: o projeto usa Biome, não ESLint;
-  - `transpilePackages: ['lucide-react']`: exigido pelo import dinâmico de ícones em `components/icon.tsx`.
+  - `transpilePackages: ['lucide-react']`: resquício do import dinâmico de ícones, que não existe mais em `components/icon.tsx`. A remoção está prevista junto da atualização do Next ([ADR-0007](../decisions/ADR-0007-next-16.md)).
 
 ## CI (`.github/workflows/tests-front.yml`)
 Roda em push e em PR para a `master`:
@@ -20,7 +21,7 @@ Roda em push e em PR para a `master`:
 - **Produção:** merge na `master`.
 - **Preview:** cada PR.
 - **Domínio:** `aleessandrohr.dev.br`. As demonstrações ficam em subdomínios (`inorbit.`, `letmeask.`), que são projetos separados.
-- **Variáveis de ambiente (a partir da Fase 6):** configuradas no painel da Vercel, separadas por ambiente (Production e Preview). O Upstash Redis pode ser ligado pelo Marketplace da Vercel, que injeta as variáveis automaticamente.
+- **Variáveis de ambiente:** nenhuma hoje. Se surgirem, configure no painel da Vercel, separadas por ambiente (Production e Preview).
 
 ## Antes de publicar
 Siga a [definição de pronto](../development/definition-of-done.md) e confira o preview da Vercel no celular e no desktop.

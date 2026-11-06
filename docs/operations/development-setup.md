@@ -6,11 +6,19 @@
 - **Editor com suporte a EditorConfig e Biome.** No VS Code, use a extensão do Biome como formatador.
 
 ## Passos
+Antes de iniciar um servidor, verifique se o projeto já está disponível em `http://localhost:3000`.
+
+- **Se já houver um servidor do projeto na porta 3000, use essa instância** para desenvolver e validar a interface. Não execute outro `bun dev`, não abra uma porta alternativa e não reinicie nem encerre o servidor existente.
+- Inicie `bun dev` somente quando não houver uma instância disponível. Se a porta 3000 estiver ocupada por outro serviço, esclareça a situação antes de iniciar o projeto em outra porta.
+- Essas regras também valem para agentes de código. Verifique a página no navegador além de consultar o status HTTP para confirmar que é o projeto correto.
+
+Para preparar uma nova cópia:
+
 ```bash
 git clone https://github.com/aleessandrohr/portfolio.git
 cd portfolio
 bun install
-bun dev            # http://localhost:3000
+bun dev            # somente se não houver servidor do projeto na porta 3000
 ```
 
 ## Scripts (`package.json`)
@@ -22,4 +30,4 @@ bun dev            # http://localhost:3000
 | `lint` / `format` / `check` | Biome. Ver [lint-and-format](../standards/lint-and-format.md) |
 
 ## Variáveis de ambiente
-Hoje nenhuma é necessária. A partir da Fase 6 (LLM), as variáveis ficam em `.env.local`, com o `.env.example` como referência. Essa parte será documentada em `environment-configuration.md` (ver [roadmap](../DOCUMENTATION_ROADMAP.md)).
+Nenhuma é necessária. Se algum dia surgirem, ficam em `.env.local`, com um `.env.example` sem valores como referência.

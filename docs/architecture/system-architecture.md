@@ -12,7 +12,7 @@ Navegador ──► Vercel (Next.js 14, App Router)
 Dependências externas no navegador:
   - Google Fonts via next/font (Inter, embutida no build)
   - iframes de demonstração (ex.: inorbit.aleessandrohr.dev.br/demo)
-  - links externos: LinkedIn, GitHub, cal.com, sites dos projetos
+  - links externos: LinkedIn, GitHub e sites dos projetos; contato por links `mailto:`
 ```
 
 | Peça | Tecnologia | Onde está |
@@ -23,14 +23,5 @@ Dependências externas no navegador:
 | Hospedagem | Vercel | — |
 | CI | GitHub Actions (lint, type-check, build) | `.github/workflows/tests-front.yml` |
 
-## Planejado ([plano](../plans/redesign-portfolio.md), Fase 6)
-O assistente com LLM no terminal acrescenta a primeira rota de servidor:
-
-```
-Terminal (cliente) ──POST──► /api/ask (route handler, runtime Node)
-                               ├─ Upstash Redis: rate limit e teto de custo
-                               └─ Gemini API (@google/genai): resposta em streaming
-```
-
-- A chave do Gemini e as credenciais do Redis ficam só no servidor (variáveis de ambiente da Vercel).
-- Se o Redis faltar ou o teto de custo estourar, a API recusa e o terminal volta aos comandos fixos. O resto do site não depende da API.
+## Sem API própria
+O site não tem rota de servidor, banco nem variáveis de ambiente. Um assistente com LLM foi avaliado e descartado porque, sem autenticação, não há como limitar o custo ([ADR-0003](../decisions/ADR-0003-gemini-upstash.md)).

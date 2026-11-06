@@ -1,61 +1,79 @@
-# Plano: novo portfólio (UI/UX, cases, currículo, terminal com LLM)
+# Plano: novo portfólio (UI/UX, cases, currículo e terminal)
 
-## Contexto
-O site (`aleessandrohr.dev.br`, Next 14 App Router, Tailwind, shadcn, Vercel) hoje é uma página única com resumo, experiências, in.orbit e Letmeask. Não mostra os trabalhos mais sérios (Workspace da Anuntech e Digitaliza Aí, do hackathon) e não tem nada de IA. O site e o PDF também se contradizem no nome do curso.
+## Situação do plano
+Atualizado em **05/11/2026**: fases **1 e 2 concluídas**, com escopo consolidado durante a renovação guiada. As fases 3, 4 e 5 continuam planejadas; páginas de case, currículo e terminal funcional não fazem parte da entrega concluída.
+
+| Fase | Situação |
+|---|---|
+| 1 — Fonte única de dados | Concluída |
+| 2 — Layout e home | Concluída |
+| 3 — Páginas de case | Planejada |
+| 4 — Currículo e PDF | Planejada |
+| 5 — Modo terminal | Planejada |
+
+## Contexto inicial
+No início do plano, o site (`aleessandrohr.dev.br`, Next 14 App Router, Tailwind, shadcn, Vercel) era uma página única com resumo, experiências, in.orbit e Letmeask. Faltavam Workspace, Digitaliza Aí e a atuação com IA. O site e o PDF também divergiam no nome do curso. A base de dados e a home foram atualizadas nas fases 1 e 2.
 
 Objetivo:
-- manter a identidade visual (Inter, azul da marca `217 91% 60%`, neutros, temas claro e escuro, cards que acendem em azul no hover);
+- manter a identidade visual (Inter, JetBrains Mono em detalhes técnicos, azul da marca com luminosidade por tema, neutros, temas claro e escuro, cards que acendem em azul no hover);
 - deixar a home mais amigável e com informações que valorizem o trabalho (referência 1);
 - criar páginas de case para cada projeto;
 - criar uma página `/curriculo` igual ao PDF (referência 3);
-- criar um modo terminal (referência 2) que mostra os mesmos dados de outra forma;
-- colocar dentro do terminal um assistente com LLM (Gemini) que responde só com os dados do site. Ele também vira um case próprio, com métricas reais de uso.
+- criar um modo terminal (referência 2) que mostra os mesmos dados de outra forma.
 
 Decisões já tomadas:
-- LLM: **Google Gemini**.
 - Hospedagem: **Vercel**.
+- Assistente com LLM: **descartado**. O site não tem autenticação, então não há como limitar o custo com segurança. Ver [ADR-0003](../decisions/ADR-0003-gemini-upstash.md).
 - Curso: **Engenharia da Computação** em todos os lugares.
 - Workspace: **só texto, sem prints**.
 - Educação: **sem página própria por enquanto**. Ela aparece num card na home e no `/curriculo`.
 
 ## Fase 1: uma única fonte de dados
-Tudo sai de `src/constants/`: home, cases, currículo, terminal e o contexto da LLM.
+**Concluída em 05/11/2026.** A home e os metadados consomem `src/constants/`; cases, currículo e terminal reutilizarão essa base quando forem implementados.
 
-- `constants/profile.ts` (novo): nome, título ("Desenvolvedor Full Stack Pleno", editável só aqui), cidade, e-mail, site, links, resumo, frase do hero, status "Aberto a oportunidades" e números do hero. Os números são só os que dá para defender: 2 anos na Anuntech, promoção de Júnior a Pleno, MVP em 4 dias, 5º de 11 no hackathon.
-- `constants/skills.ts` (novo): mesmos grupos do PDF (Linguagens, Front-end, Back-end, Banco de Dados, Infra & DevOps, Ferramentas de IA, Outros). Recebe o `skillBadgeStyles` que hoje está em `components/experience.tsx`.
-- `constants/projects.ts`: o `Project` ganha `slug`, `featured`, `kind` (`profissional | hackathon | pessoal`), `period`, `role`, `stack` e `case` (`context`, `problem`, `contribution[]`, `solution`, `decisions[]`, `results[]`, `learnings[]`). Também ganha um `diagram?` simples. `imageUrl`, `links` e `iframeUrl` continuam e ficam opcionais. A ordem é:
-  1. `workspace`: texto vindo de `experiences.anuntech` (micro frontends com Module Federation, bookmarks, notificações com Socket.io, infraestrutura, promoção). Campos extras (outros módulos, uso de IA no desenvolvimento) ficam opcionais e só aparecem depois de preenchidos.
+- `constants/profile.ts` (novo): nome, título ("Desenvolvedor Full Stack Pleno", editável só aqui), foto, cidade, e-mail, site, links, resumo, frase do hero e descrição para SEO. Campos sem consumidor, como status, stack de destaque e highlights, foram removidos. Na revisão da Fase 2, a faixa de números foi removida da home; esses fatos aparecem contextualizados em experiências e projetos: 2 anos na Anuntech, promoção de Júnior a Pleno, MVP em 4 dias, 5º de 11 no hackathon.
+- `constants/skills.ts`: grupos de Linguagens, Front-end, Back-end, Mobile, Banco de Dados, Infra & DevOps, IA e Outros. A interface usa badges neutros, sem mapa de cores por tecnologia.
+- `constants/projects.ts`: o contrato atual contém apenas os campos usados pelos cards: `id`, `title`, `description`, `category`, `featured`, `kind` e, quando existem, `imageUrl`, `websiteUrl` e `demoUrl`. Slug, período, papel, stack, case, diagrama e seleção para currículo serão definidos quando houver consumidores nas fases seguintes. A ordem é:
+  1. `workspace`: texto vindo de `experiences.anuntech` (micro frontends com Module Federation, bookmarks, notificações com Socket.io, infraestrutura, promoção). Novas informações só entram quando tiverem um consumidor e conteúdo confirmado.
   2. `digitaliza-ai`: case do hackathon, dentro das [regras de conteúdo](../standards/content-guidelines.md). Sem marca da organizadora, sem link da demo enquanto ela exibir essa marca, sem dados internos e sem afirmar produção.
-  3. `inorbit` e `letmeask`: mantêm o que têm hoje, inclusive o `iframeUrl` da demo.
-- `constants/educations.ts`: corrigir para Engenharia da Computação, UFMA, 04/2025–04/2028.
-- `lib/knowledge.ts` (novo): transforma os constants em texto para o contexto da LLM e em objetos para `cat about.json` no terminal.
-- `app/layout.tsx`: corrigir descrição e JSON-LD (curso). Criar `app/sitemap.ts` com as novas rotas.
+  3. `inorbit` e `letmeask`: mantêm o que têm hoje, inclusive o `demoUrl` da demo.
+- `constants/educations.ts`: exporta `educations`, com contrato próprio `Education` (`course`, `institution`, datas e descrição). Formação atual: Engenharia da Computação, UFMA, 04/2025–04/2028.
+- `constants/experiences.ts`: exporta uma coleção `experiences`, com organização e detalhes separados, atividades em lista e `end: null` para vínculos em andamento.
+- As visões leem diretamente os dados de `constants/`. Configurações compartilhadas ficam em `configs/`, integrações em `lib/` e funções puras em `utils/` (ver ADR-0008).
+- `constants/seo.ts`: temas de atuação compartilhados entre keywords e `knowsAbout`, com tecnologias derivadas de `skills.ts`.
+- `app/layout.tsx`: descrição, curso, keywords e JSON-LD atualizados. `app/sitemap.ts` contém a home; novas páginas entram quando forem implementadas.
 
 ## Fase 2: layout e home
-- `components/site-header.tsx`: substitui `profile.tsx`.
-  - Mantém a barra fixa com vidro, o avatar e o Drawer no celular.
-  - Os links passam a ser rotas: Início, Projetos, Currículo, Terminal.
-  - Ganha um botão `>_` ao lado do `ModeToggle`.
-- `components/site-footer.tsx`: links e redes.
-- Fonte mono extra com `next/font` (JetBrains Mono), só para o terminal e pequenos detalhes de código.
-- Home (`app/page.tsx`), dividida em `components/home/*`:
-  1. **Hero:** foto (`/static/assets/profile.png`) com um brilho radial azul e grade de pontos ao fundo, "Olá, eu sou", nome com o sobrenome em azul e título. Abaixo vêm a frase, três botões (Ver projetos, Agendar conversa pelo cal.com, Currículo) e os ícones de redes (`socialMedia`).
-  2. **Faixa de números:** os números de `profile.ts`.
-  3. **Sobre e stack:** badges por grupo, sem barras de porcentagem.
-  4. **Projetos em destaque:** Workspace e Digitaliza Aí em cards grandes, in.orbit e Letmeask menores. Cada card leva a `/projetos/[slug]`. O card reaproveita o atual `components/project/index.tsx`, com o Dialog da demo e o `Iframe`.
-  5. **Experiência:** linha do tempo compacta, reaproveitando o `Experience` com uma variante enxuta, e link para o `/curriculo`.
-  6. **Educação:** card simples.
-  7. **Contato:** bloco com cal.com, LinkedIn e e-mail, e um botão "Pergunte sobre mim" que abre o terminal no modo `chat`.
+**Concluída em 05/11/2026.** Escopo entregue:
+
+- `components/header.tsx`: substitui `profile.tsx`.
+  - Barra sticky de vidro, arredondada e com margens, conteúdo em uma linha no desktop e Drawer no celular. Foto e cargo ficam no hero.
+  - Navegação por âncoras: Sobre, Projetos, Experiência, Educação e Contato. Links para futuras páginas serão incluídos nas fases correspondentes.
+  - Controle `>_ Alessandro`, em mono, com semântica de switch desativado e indicação de terminal em breve, além do `ModeToggle`.
+- `components/footer.tsx`: identificação, ano e link para o topo. Contatos e redes ficam nas seções da home.
+- Inter como fonte principal e JetBrains Mono, via `next/font`, no controle de terminal, badges, períodos e endereço do GitHub. Ver [design system](../frontend/design-system.md).
+- Temas claro e escuro refinados: base grafite no escuro; fundo cinza claro e cards brancos no claro; azul com luminosidade por tema, vidro seletivo e raios por função.
+- Animações com Motion: hero ocupa a primeira tela, textos principais aparecem letra a letra e as seções têm entrada progressiva. Respeita movimento reduzido e mantém o conteúdo acessível sem JavaScript.
+- Open Graph em 1200 × 630, com dados atuais, foto e fontes locais; favicon de terminal em `public/icon.svg`, referenciado pelo layout.
+- Home (`app/(home)/page.tsx`), dividida em `app/(home)/_components/*`:
+  1. **Hero:** foto (`/static/assets/profile.png`) com brilho radial azul e grade ao fundo, "Olá, eu sou", nome com sobrenome em azul, cargo e frase. Ações: Ver projetos e Enviar e-mail, além dos ícones de redes (`socialMedia`). A ação de currículo fica para a fase 4.
+  2. **Sobre e habilidades:** Sobre ocupa 50% e Habilidades 50% no desktop; no celular, ficam empilhados. Um único bloco reúne os grupos técnicos em badges. Os dados vêm de `profile.ts` e de `skills` em `skills.ts`. A coleção interpessoal não era renderizada e foi removida na limpeza de dados sem uso. Sem painel interativo ou barras de porcentagem.
+  3. **Projetos:** carrossel (shadcn com Embla), com três cards no desktop, dois no tablet e um card com parte do próximo no celular. Workspace e Digitaliza Aí aparecem primeiro, com capas neutras, seguidos por in.orbit e Letmeask. Avança a cada 2 s, pausa com mouse ou foco e respeita movimento reduzido. Os cards usam site e demo quando disponíveis; links para cases ficam para a fase 3. Detalhes em [ui-ux-guidelines](../frontend/ui-ux-guidelines.md).
+  4. **Experiência:** linha do tempo compacta, usando o `Experience`, com todas as atividades visíveis, sem expandir. O link para currículo fica para a fase 4.
+     Tutor e subsíndico entram na mesma linha do tempo, ordenada por data (`utils/experience-timeline.ts`), com rótulo de categoria e duração; o nome do condomínio fica omitido por ser repositório público.
+  5. **Educação:** card simples.
+  6. **Contato:** cartão no estilo de perfil do GitHub: foto e link do perfil no topo, grade decorativa com as iniciais (`app/(home)/_components/pixel-grid.tsx`, não representa commits), e embaixo, centralizados, nome, cargo, e-mail, LinkedIn, localização (sem telefone) e botão de e-mail. No hero, a grade fica atrás do conteúdo, no centro, desfocada e quase transparente no desktop, e no pé da tela no celular, junto com um brilho azul suave no hero do celular. Item "Contato" no menu do header.
 
 ## Fase 3: páginas de case `app/projetos/[slug]/page.tsx`
+- Antes de implementar os cases, acrescentar a `projects` e ao tipo `Project` somente os campos que essa página utilizar. Os dados de case e diagrama antecipados foram removidos da versão atual por não terem consumidor.
 - `generateStaticParams` e `generateMetadata` a partir de `projects`.
 - Estrutura: cabeçalho (título, tipo, período, papel, stack) → contexto → problema → minha contribuição → solução (com `diagram` em CSS/SVG simples, se houver) → decisões técnicas → resultados → aprendizados → links e demo.
 - Seções vazias não aparecem.
-- Componente `components/project/case-section.tsx`. Navegação "anterior / próximo" no fim da página.
+- Componente `app/projetos/[slug]/_components/case-section.tsx`. Navegação "anterior / próximo" no fim da página.
 
 ## Fase 4: `/curriculo`
 - `app/curriculo/page.tsx` repete a ordem e o texto do PDF:
-  - **Cabeçalho em 3 colunas:** cidade, e-mail e site | nome, título e stack | LinkedIn, GitHub e cal.com.
+  - **Cabeçalho em 3 colunas:** cidade, e-mail e site | nome, título e stack | LinkedIn e GitHub.
   - **Seções:** Resumo, Habilidades, Experiência (em linha do tempo na tela), Projetos e Educação.
 - Botão "Imprimir / Salvar PDF" (`window.print()`).
 - Bloco `@media print` em `globals.css`:
@@ -65,10 +83,9 @@ Tudo sai de `src/constants/`: home, cases, currículo, terminal e o contexto da 
 - O PDF passa a sair do próprio site.
 
 ## Fase 5: modo terminal
-- `components/terminal/commands.ts`: registro puro de comandos, testável e sem React, que lê de `lib/knowledge.ts`.
+- `components/terminal/commands.ts`: registro puro de comandos, testável e sem React, que recebe os dados de `constants/`.
   - `help`, `whoami`, `cat about.json`, `ls [projetos]`, `cat projetos/<slug>` / `open <slug>`, `experiencia`, `educacao`, `skills`
   - `curriculo` (navega), `contato`, `theme <claro|escuro|sistema>` (via `next-themes`), `history`, `clear`
-  - `ask <pergunta>` e `chat` / `exit` (Fase 6)
 - `components/terminal/terminal.tsx` (client):
   - **Interação:** prompt `~/alessandro $`, histórico com ↑/↓, Tab completa, Esc fecha.
   - **Atalhos clicáveis:** botões de comando, para celular e para quem não é dev.
@@ -76,46 +93,22 @@ Tudo sai de `src/constants/`: home, cases, currículo, terminal e o contexto da 
 - `components/terminal/terminal-dialog.tsx`: abre por cima da página com o `ui/dialog` atual, pelo botão `>_` ou por Ctrl+`.
 - `app/terminal/page.tsx`: versão em tela cheia, para mandar o link direto.
 
-## Fase 6: LLM no terminal (Gemini)
-- **Dependências:** `@google/genai`, `@upstash/redis` e `@upstash/ratelimit` (Upstash pelo Marketplace da Vercel).
-- **`app/api/ask/route.ts`** (runtime Node), recebe POST `{ messages }`:
-  - **Validação:** checa `Origin`, limita a pergunta a ~500 caracteres e o histórico às últimas ~6 trocas.
-  - **Rate limit:** por IP com hash (ex.: 10 a cada 10 min e 30 por dia).
-  - **Teto de custo:** diário e mensal, num contador no Redis alimentado pelo `usageMetadata` da resposta, com o limite em variável de ambiente. Se estourar, responde 429/503 com um código. O terminal então mostra "assistente indisponível agora, use `help`", e os comandos fixos continuam funcionando.
-  - **Chamada ao modelo:** `generateContentStream` com o modelo em `GEMINI_MODEL` (padrão: o Flash-Lite atual), `temperature` ~0.2 e `maxOutputTokens` ~400. A resposta volta em streaming de texto.
-- **`lib/llm/prompt.ts`**, regras do assistente do portfólio:
-  - responde só com o `KNOWLEDGE` montado em `lib/knowledge.ts`, que vai inteiro no contexto (sem RAG);
-  - responde no idioma da pergunta, em pt-BR por padrão;
-  - quando não souber, diz que não sabe e sugere `contato`;
-  - nunca inventa números, empresas ou resultados;
-  - recusa assunto fora do tema e ignora pedidos para mudar de papel;
-  - cita as páginas como `[/projetos/slug]`, e o terminal transforma isso em link.
-- **`lib/llm/limits.ts`:** junta o rate limit e o teto de custo. Sem as variáveis do Upstash (em desenvolvimento), usa a memória.
-- **Métricas para o case:** contadores no Redis (perguntas por dia, tokens, custo estimado, recusas e fallbacks). Guardar o texto das perguntas fica desligado por padrão (`LLM_LOG_QUESTIONS`). Se ligar, guarda por 30 dias e mostra um aviso no banner do `chat`.
-- **`.env.example`:** `GEMINI_API_KEY`, `GEMINI_MODEL`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `LLM_DAILY_BUDGET_USD`, `LLM_MONTHLY_BUDGET_USD`, `LLM_LOG_QUESTIONS`. A chave fica só no servidor.
-- **No terminal:** `ask` faz uma pergunta só e `chat` mantém a conversa até `exit`. A resposta aparece aos poucos, com cursor piscando e botão para cancelar (`AbortController`).
-
 ## Pendências de conteúdo (não bloqueiam o código)
 - Detalhes adicionais do Workspace: outros módulos e uso de IA no desenvolvimento.
-- Prints do Digitaliza Aí sem a marca da organizadora. Até lá o card fica sem imagem.
+- Workspace e Digitaliza Aí permanecem sem imagem e sem link de site no estado atual. Uma futura imagem do Digitaliza Aí deve respeitar as regras de marca de terceiros.
 
 ## Arquivos principais
-- **Novos:** `constants/profile.ts`, `constants/skills.ts`, `lib/knowledge.ts`, `components/site-header.tsx`, `components/site-footer.tsx`, `components/home/*`, `components/project/case-section.tsx`, `components/terminal/*`, `lib/llm/*`, `app/projetos/[slug]/page.tsx`, `app/curriculo/page.tsx`, `app/terminal/page.tsx`, `app/api/ask/route.ts`, `app/sitemap.ts`, `.env.example`.
-- **Alterados:** `constants/projects.ts`, `constants/educations.ts`, `constants/experiences.ts` (se precisar), `components/project/index.tsx`, `components/experience.tsx`, `app/page.tsx`, `app/layout.tsx`, `app/globals.css`, `tailwind.config.ts`, `package.json`.
-- **Removido:** `components/profile.tsx` (substituído pelo `site-header`). `constants/menu-items.ts` passa a guardar as rotas.
+- **Novos:** `constants/profile.ts`, `constants/skills.ts`, `configs/menu-items.ts`, `lib/dayjs.ts`, `utils/experience-timeline.ts`, `components/header.tsx`, `components/footer.tsx`, `app/(home)/_components/*`, `app/projetos/[slug]/_components/case-section.tsx`, `components/terminal/*`, `app/projetos/[slug]/page.tsx`, `app/curriculo/page.tsx`, `app/terminal/page.tsx`, `app/sitemap.ts`.
+- **Alterados:** `constants/projects.ts`, `constants/educations.ts`, `constants/experiences.ts` (se precisar), `app/(home)/_components/projects/project-card/index.tsx`, `app/(home)/_components/experiences/experience.tsx`, `app/(home)/page.tsx`, `app/layout.tsx`, `app/globals.css`, `tailwind.config.ts`, `package.json`.
+- **Removido:** `components/profile.tsx` (substituído pelo `header`). `configs/menu-items.ts` guarda a navegação; o agregador `knowledge` foi removido.
 
 ## Execução
-Um commit por fase, cada fase deixando o site funcionando. Ordem: 1 → 2 → 3 → 4 → 5 → 6. Se o prazo da inscrição apertar: 1 → 5 → 6 primeiro, depois 2–4.
+As fases 1 e 2 foram implementadas em conjunto durante a renovação guiada e estão concluídas. Cada próxima fase deve deixar o site funcionando. Ordem restante: 3 → 4 → 5.
 
 ## Verificação
-- A cada fase: `bun run check`, `bun run type-check` e `bun run build`, os mesmos passos do CI (`.github/workflows/tests-front.yml`).
-- `bun dev`, depois conferir:
+- A cada fase: Biome apenas nos arquivos alterados, `bun run type-check` e `bun run build`, seguindo a [definição de pronto](../development/definition-of-done.md). Com servidor ativo, o build deve rodar em cópia isolada.
+- Reutilizar o servidor existente na porta 3000; iniciar `bun dev` apenas se não houver uma instância do projeto. Conferir as rotas já implementadas; as verificações abaixo de cases, currículo e terminal se aplicam às fases futuras:
   - home, `/projetos/<cada slug>`, `/curriculo` e `/terminal` nos temas claro e escuro, em 375 px e em desktop;
   - a pré-visualização de impressão do `/curriculo` contra o PDF atual, lado a lado;
   - o terminal: todos os comandos, ↑/↓, Tab, Esc, Ctrl+`, atalhos clicáveis e leitor de tela (aria-live).
-- A LLM:
-  - com `GEMINI_API_KEY`: perguntas sobre os projetos (precisam bater com os constants), uma pergunta sem resposta nos dados (tem que dizer que não sabe) e uma tentativa de prompt injection (tem que recusar);
-  - sem a chave: o fallback aparece e os comandos continuam funcionando;
-  - rate limit: um loop de `curl` em `/api/ask` até receber 429;
-  - teto de custo: baixar `LLM_DAILY_BUDGET_USD` para disparar o fallback.
-- Deploy de preview na Vercel com as variáveis do Upstash antes de ir para `master`.
+- Deploy de preview na Vercel antes de ir para `master`.

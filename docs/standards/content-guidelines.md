@@ -1,6 +1,6 @@
 # Regras de conteúdo
 
-Valem para **o que pode ser publicado** no site e para o que o assistente com LLM pode responder. Toda mudança em `src/constants/` precisa seguir estas regras.
+Valem para **o que pode ser publicado** no site. Toda mudança em `src/constants/` precisa seguir estas regras.
 
 ## Veracidade
 1. **Só números verificáveis:** cada número precisa ter uma fonte, como uma data, um histórico de git, uma colocação ou uma métrica do próprio sistema. Estimativa só quando declarada como estimativa.
@@ -23,14 +23,17 @@ Casos atuais:
 - **Workspace (Anuntech):** só texto, sem prints.
 - **Digitaliza Aí (hackathon):** sem a marca da organizadora e sem link da demonstração enquanto ela exibir essa marca.
 
+## Experiências
+- **Um item por empresa ou instituição**, com o cargo atual no título e o período completo. Promoções não viram itens separados nem blocos aninhados.
+- **A promoção entra como atividade com data**, no início da lista (ex.: "Fui promovido de Júnior para Pleno em 01/2025"). O destaque vem do texto, e a cronologia fica correta.
+- **Só crie item próprio para um cargo anterior** se ele tiver escopo diferente e entregas substanciais.
+- **Ordem e duração saem de `utils/experience-timeline.ts`:** use `MM/YYYY` nas datas e `end: null` para vínculo em andamento; `formatPeriod` exibe “Atual”. A ordem no arquivo de constantes não importa.
+- **Atuações fora de tecnologia** (docência, gestão) entram na mesma linha do tempo, com `category`. Não cite o nome de condomínios, moradores ou outros terceiros sem divulgação pública.
+
 ## Dados pessoais
-- **Pode aparecer no site e no repositório:** o que já está no currículo público, ou seja, nome, cidade, e-mail profissional, LinkedIn, GitHub e cal.com.
+- **Pode aparecer no site e no repositório:** o que já está no currículo público, ou seja, nome, cidade, e-mail profissional, LinkedIn e GitHub.
 - **Não entra:** telefone, documentos, endereço, dados de processos seletivos, candidaturas, salários e anotações pessoais. Esse material fica fora do repositório.
 
 ## Consistência
-- **Título, curso e datas iguais em todos os lugares:** home, `/curriculo`, metadados, imagem OG e respostas da LLM. O curso é **Engenharia da Computação**, UFMA, 04/2025–04/2028.
+- **Título, curso e datas iguais em todos os lugares:** home, `/curriculo`, metadados, imagem OG e terminal. O curso é **Engenharia da Computação**, UFMA, 04/2025–04/2028.
 - **O currículo em PDF segue a página `/curriculo`**, e não o contrário.
-
-## Assistente com LLM
-- **Responde só com o que está em `src/constants/`.**
-- **Diz quando não sabe** e não estima números que não estão nos dados.

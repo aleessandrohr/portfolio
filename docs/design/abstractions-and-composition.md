@@ -30,19 +30,18 @@ terminal.tsx (interface: entrada, saída, histórico, interpretação de Command
      └── app/terminal/page.tsx → tela cheia, link direto
 ```
 - O `terminal.tsx` não sabe se está num dialog ou numa página.
-- O contêiner passa só o que difere, como `onClose` e o modo inicial (`chat` quando aberto por "Pergunte sobre mim").
+- O contêiner passa só o que difere, como `onClose`.
 
-### Uma fonte de dados, várias visões (Fases 1 a 6)
-O `lib/knowledge.ts` é a única abstração que todas as visões compartilham:
+### Uma fonte de dados, várias visões (Fases 1 a 5)
+As visões consomem os mesmos dados de `constants/`, sem um agregador intermediário:
 - **home e cases:** usam os objetos tipados;
 - **currículo:** usa os mesmos objetos, em ordem de currículo;
-- **terminal:** usa objetos e texto curto para `cat`, `ls` e `skills`;
-- **LLM:** usa um texto único com todo o conteúdo.
+- **terminal:** usa objetos e texto curto para `cat`, `ls` e `skills`.
 
 Nenhuma visão reescreve o conteúdo; cada uma só formata.
 
 ### Variante em vez de cópia (Fase 2)
-Quando a home precisar de uma versão compacta de `Experience` ou `Project`, use uma prop `variant` (`'full' | 'compact'`) no mesmo componente. Não crie uma cópia. Se as variantes divergirem demais, com estrutura e não só estilo diferentes, aí sim separe em componentes.
+Crie uma variante apenas quando houver dois usos reais. A experiência atual possui somente a apresentação da linha do tempo; a variante antiga de card e seus badges foram removidos por não terem consumidor.
 
 ## Quando criar uma abstração
 Crie quando **todas** as condições valerem:

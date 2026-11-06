@@ -15,6 +15,7 @@
 - **`interface` para formatos de dados** (`Experience`, `Project`) e **`type`** para uniões, aliases e `Props`.
 - **`import type`** para importar só tipos.
 - **Campos opcionais com `?`.** O componente trata a ausência com renderização condicional, sem valores fictícios.
-- **Tipos derivados em vez de duplicados:** `keyof typeof dynamicIconImports` gera `DynamicIconImports`, e as props reaproveitam a interface do dado.
-- **Arrays:** o projeto usa `Array<string>`. Mantenha o padrão.
-- **Dados externos (Fase 6):** valide o corpo das requisições em `/api/ask` antes de usar, verificando tipo e tamanho. Não confie em `as`.
+- **Tipos derivados em vez de duplicados:** `keyof typeof icons` gera `IconName` em `components/icon.tsx`, e as props reaproveitam a interface do dado.
+- **Coleções de constantes e props:** use `ReadonlyArray<T>` quando o consumidor apenas lê os itens, como atividades, detalhes e habilidades. Arrays locais mutáveis podem usar `Array<T>`.
+- **Contratos de domínio separados:** `Education` descreve formação e `Experience` descreve atuação. Ambos compartilham apenas datas por `Period`. `MonthYear` restringe o mês a `01`–`12`, e `null` identifica um vínculo sem término.
+- **Dados externos:** se o projeto passar a receber dados de fora, valide tipo e tamanho antes de usar. Não confie em `as`.

@@ -14,7 +14,6 @@ Documentação técnica e de produto do site [aleessandrohr.dev.br](https://alee
 | [architecture/](architecture/) | Sistema, aplicação, princípios, limites entre módulos, fluxo de dados |
 | [design/](design/) | Design de software: padrões, abstrações e composição, tratamento de erros |
 | [frontend/](frontend/) | Estrutura, componentes, rotas, estado, estilo, design system, acessibilidade, UI/UX |
-| `backend/` | Rotas de servidor e integrações (planejado, Fase 6, ver [roadmap](DOCUMENTATION_ROADMAP.md)) |
 | [standards/](standards/) | Padrões de código, conteúdo, lint, nomes, pastas, TypeScript, segurança |
 | [development/](development/) | Fluxo de trabalho, definição de pronto, git e commits |
 | [operations/](operations/) | Setup, build e deploy, solução de problemas |

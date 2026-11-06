@@ -1,69 +1,129 @@
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
+import { openGraphConfig } from '@/configs/open-graph'
+import { educations } from '@/constants/educations'
+import { profile } from '@/constants/profile'
 
-export const alt = 'Alessandro Henrique Ramos, Desenvolvedor Full Stack Pleno'
-export const size = {
-	width: 2400,
-	height: 1260,
-}
+export const alt = `${profile.displayName}, ${profile.role}`
+export const size = openGraphConfig.size
 export const contentType = 'image/png'
 
-export default function OpenGraphImage() {
+const { colors } = openGraphConfig
+const [firstName, ...lastName] = profile.displayName.split(' ')
+const hostname = new URL(profile.siteUrl).hostname
+
+export default async function OpenGraphImage() {
+	const [regular, semibold, mono, photo] = await Promise.all([
+		readFile(join(process.cwd(), 'src/app/_assets/fonts/inter-regular.ttf')),
+		readFile(join(process.cwd(), 'src/app/_assets/fonts/inter-semibold.ttf')),
+		readFile(
+			join(process.cwd(), 'src/app/_assets/fonts/jetbrains-mono-regular.ttf')
+		),
+		readFile(join(process.cwd(), 'public', profile.photo.src)),
+	])
+
 	return new ImageResponse(
-		(
+		<div
+			style={{
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+				flexDirection: 'column',
+				padding: '56px',
+				background: colors.background,
+				color: colors.foreground,
+				fontFamily: 'Inter',
+			}}
+		>
 			<div
 				style={{
 					display: 'flex',
-					height: '100%',
-					width: '100%',
-					flexDirection: 'column',
+					flex: 1,
+					alignItems: 'center',
 					justifyContent: 'space-between',
-					background: '#0a0a0a',
-					color: '#f4f4f5',
-					padding: '136px',
+					gap: '48px',
+					paddingBottom: '36px',
 				}}
 			>
-				<div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+				<div
+					style={{ display: 'flex', flexDirection: 'column', width: '760px' }}
+				>
 					<div
 						style={{
 							display: 'flex',
-							height: '36px',
-							width: '36px',
+							flexDirection: 'column',
+							fontSize: '82px',
+							fontWeight: 600,
+							lineHeight: 1.06,
+							letterSpacing: '-4px',
+						}}
+					>
+						<span>{firstName}</span>
+						<span style={{ color: colors.brand }}>{lastName.join(' ')}</span>
+					</div>
+					<span
+						style={{ marginTop: '22px', fontSize: '32px', fontWeight: 600 }}
+					>
+						{profile.role}
+					</span>
+					<p
+						style={{
+							margin: '20px 0 0',
+							color: colors.muted,
+							fontSize: '26px',
+							lineHeight: 1.45,
+						}}
+					>
+						{profile.heroPhrase}
+					</p>
+				</div>
+				<div
+					style={{
+						display: 'flex',
+						flexShrink: 0,
+						padding: '8px',
+						border: `2px solid ${colors.brand}`,
+						borderRadius: '999px',
+					}}
+				>
+					{/* biome-ignore lint/performance/noImgElement: ImageResponse rasteriza a imagem local, sem renderização no navegador. */}
+					<img
+						src={`data:image/png;base64,${photo.toString('base64')}`}
+						alt={profile.photo.alt}
+						width={216}
+						height={216}
+						style={{
 							borderRadius: '999px',
-							background: '#3b82f6',
+							objectFit: 'cover',
+							objectPosition: '50% 25%',
 						}}
 					/>
-					<span
-						style={{ fontSize: '48px', fontWeight: 700, letterSpacing: '0.12em' }}
-					>
-						PORTFÓLIO
-					</span>
-				</div>
-
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '44px' }}>
-					<span style={{ fontSize: '152px', fontWeight: 800, lineHeight: 1 }}>
-						Alessandro Henrique Ramos
-					</span>
-					<span style={{ color: '#93c5fd', fontSize: '80px', fontWeight: 700 }}>
-						Desenvolvedor Full Stack Pleno
-					</span>
-					<span
-						style={{
-							color: '#d4d4d8',
-							fontSize: '64px',
-							fontWeight: 600,
-							lineHeight: 1.3,
-						}}
-					>
-						TypeScript · React.js · Next.js · Node.js
-					</span>
-				</div>
-
-				<div style={{ display: 'flex', justifyContent: 'space-between', color: '#a1a1aa' }}>
-					<span style={{ fontSize: '48px' }}>aleessandrohr.dev.br</span>
-					<span style={{ fontSize: '48px' }}>UFMA · Engenharia da Computação</span>
 				</div>
 			</div>
-		),
-		size,
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+					paddingTop: '24px',
+					borderTop: `1px solid ${colors.border}`,
+					fontFamily: 'JetBrains Mono',
+					fontSize: '20px',
+					color: colors.muted,
+				}}
+			>
+				<span>{hostname}</span>
+				<span style={{ fontSize: '18px' }}>{educations.ufma.course}</span>
+			</div>
+		</div>,
+		{
+			...size,
+			fonts: [
+				{ name: 'Inter', data: regular, weight: 400, style: 'normal' },
+				{ name: 'Inter', data: semibold, weight: 600, style: 'normal' },
+				{ name: 'JetBrains Mono', data: mono, weight: 400, style: 'normal' },
+			],
+		}
 	)
 }

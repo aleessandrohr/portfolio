@@ -16,9 +16,10 @@ Meta: WCAG 2.1 AA.
 - **Semântica:** use `<nav>`, `<main>` e `<section>` com títulos `h2` e `h3` em ordem. Use `<a>` para navegar e `<button>` para ação.
 - **Movimento:** respeite `prefers-reduced-motion` em animações novas (`motion-safe:` e `motion-reduce:`).
 - **Toque:** alvos com pelo menos 40 a 44 px no celular.
+- **Movimento automático:** conteúdo que se move sozinho deve parar com o mouse e com o foco por teclado e respeitar `prefers-reduced-motion`. O carrossel de projetos (`home/projects-carousel.tsx`) não tem botão de pausa, por decisão de design. A WCAG 2.2.2 pede um mecanismo de pausa para movimento que dura mais de 5 s; a pausa por mouse e foco cobre só parte dos casos, e quem usa apenas toque não tem como parar a rotação.
 
 ## Terminal (planejado, Fase 5)
-- **Saída:** fica numa região `aria-live="polite"`. Respostas da LLM em streaming só são anunciadas quando completam.
+- **Saída:** fica numa região `aria-live="polite"`.
 - **Input:** tem `<label>` visível ou `aria-label`.
 - **Foco:** volta para o input após cada comando.
 - **Esc:** fecha o terminal quando aberto como dialog.

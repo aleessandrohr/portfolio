@@ -25,7 +25,7 @@ A documentação fica em [docs/](docs/README.md). Ela não precisa ser lida inte
 | Decisão estrutural (nova dependência, novo serviço, mudar padrão) | [architecture/architectural-principles](docs/architecture/architectural-principles.md), [decisions/](docs/decisions/README.md) (registre um ADR) |
 | Metadados, SEO, Open Graph | [frontend/routing-guidelines](docs/frontend/routing-guidelines.md) |
 | Terminal (Fase 5) | [plans/redesign-portfolio](docs/plans/redesign-portfolio.md) (Fase 5), [design/design-patterns](docs/design/design-patterns.md) (registro de comandos), [frontend/accessibility](docs/frontend/accessibility.md) |
-| LLM, `/api/ask`, Gemini, limites (Fase 6) | [plans/redesign-portfolio](docs/plans/redesign-portfolio.md) (Fase 6), [design/error-handling](docs/design/error-handling.md), [standards/security-guidelines](docs/standards/security-guidelines.md) |
+| Escrever ou refatorar código (ordem do arquivo, blocos, funções, laços) | [standards/code-structure](docs/standards/code-structure.md), [standards/coding-standards](docs/standards/coding-standards.md) |
 | Tipos e TypeScript | [standards/typescript-guidelines](docs/standards/typescript-guidelines.md) |
 | Nomes de arquivos, variáveis, componentes | [standards/naming-conventions](docs/standards/naming-conventions.md) |
 | Lint ou format falhando | [standards/lint-and-format](docs/standards/lint-and-format.md), [operations/troubleshooting](docs/operations/troubleshooting.md) |

@@ -23,8 +23,3 @@ Uma tarefa está pronta quando todos os itens que se aplicam a ela estão cumpri
 ## Rota nova
 - [ ] Tem `metadata` ou `generateMetadata`.
 - [ ] Entrou no menu e no sitemap, quando for navegável.
-
-## Servidor ou LLM (Fase 6)
-- [ ] Segredos só no servidor e documentados em `.env.example`.
-- [ ] Rate limit e teto de custo testados.
-- [ ] Fallback testado com a API indisponível.

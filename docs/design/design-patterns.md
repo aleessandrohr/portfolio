@@ -4,7 +4,7 @@
 ### Renderização dirigida por dados
 - **Como funciona:** cada coleção é um objeto em `constants/`, e a página converte esse objeto em componentes com `Object.values(...).map(...)`.
 - **Para adicionar um item:** basta adicionar uma entrada. A ordem do objeto define a ordem na tela.
-- **Exemplos:** `projects` gera `<Project>` e `experiences` gera `<Experience>` em `app/page.tsx`.
+- **Exemplos:** `projects` gera `<Project>` e `experiences` gera `<Experience>` em `app/(home)/page.tsx`.
 
 ### Objeto validado por tipo (`as const satisfies`)
 ```ts
@@ -17,7 +17,7 @@ export const projects = { ... } as const satisfies Record<string, Project>
 `type Props = ProjectType`: o componente recebe exatamente os campos do item, e o tipo garante que dado e componente evoluam juntos.
 
 ### Mapa de variantes
-Use um `Record<chave, classes>` com um valor padrão para escolher estilo a partir de um dado. Exemplo: `skillBadgeStyles[skill] ?? defaultSkillBadgeStyle`, em `components/experience.tsx`. Evite cadeias de `if` e `switch` para estilo.
+Use um `Record<chave, valor>` para escolher uma apresentação a partir de um dado. Exemplo atual: `kindIcons[kind]` escolhe o ícone da capa em `app/(home)/_components/projects/project-card/cover.tsx`. Evite cadeias de `if` e `switch` por nome de projeto.
 
 ### Estado sincronizado com a URL
 O dialog da demonstração abre quando o hash é `#<id>-demo` e escuta `hashchange`, para que o link possa ser compartilhado. Use o mesmo padrão para qualquer estado que valha compartilhar, como `#terminal` no plano.
@@ -25,8 +25,8 @@ O dialog da demonstração abre quando o hash é `#<id>-demo` e escuta `hashchan
 ### Wrapper de provedor
 `providers/theme.tsx` envolve o `next-themes` num componente `'use client'`. Isso permite usá-lo a partir do `layout.tsx`, que é Server Component.
 
-### Carregamento por nome
-`<Icon name>` (`components/icon.tsx`) importa o ícone do lucide pelo nome, com `next/dynamic`, para dados que guardam ícones como string (`social-media.ts`).
+### Mapa estático por nome
+`<Icon name>` (`components/icon.tsx`) escolhe o ícone num mapa `icons` com os ícones usados (`github`, `linkedin`, `mail`), para dados que guardam o ícone como string (`social-media.ts`). `IconName` sai das chaves do mapa. Para usar um ícone novo por nome, importe-o do `lucide-react` e inclua-o no mapa. Não use `lucide-react/dynamicIconImports` nem `next/dynamic` dentro do render: o primeiro registra um `import()` por ícone da biblioteca e deixa o dev e o build mais lentos, e o segundo cria um componente novo a cada render.
 
 ## Planejados
 ### Registro de comandos (Fase 5)
@@ -52,23 +52,9 @@ type CommandResult =
 	| { type: 'navigate'; href: string }
 	| { type: 'theme'; value: 'light' | 'dark' | 'system' }
 	| { type: 'clear' }
-	| { type: 'ask'; question: string }
-	| { type: 'mode'; value: 'command' | 'chat' }
 	| { type: 'error'; message: string }
 ```
 O `terminal.tsx` interpreta cada caso. Assim, os comandos ficam testáveis e a interface fica num só lugar.
-
-### Adaptador de armazenamento (Fase 6)
-`lib/llm/limits.ts` expõe uma interface única (`check`, `consume`) com duas implementações: Upstash Redis em produção e memória em desenvolvimento. A escolha é feita pela presença das variáveis de ambiente. O resto do código não sabe qual está em uso.
-
-### Pipeline da rota (Fase 6)
-`/api/ask` executa etapas em sequência, e cada uma pode encerrar a requisição com um erro tipado:
-
-```
-validar → limitar (rate limit, teto) → montar prompt → chamar o modelo → transmitir → registrar uso
-```
-
-Ver [error-handling](error-handling.md).
 
 ## Anti-padrões
 - **Texto de conteúdo dentro de componente.**
