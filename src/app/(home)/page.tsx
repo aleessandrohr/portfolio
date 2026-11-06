@@ -30,7 +30,7 @@ export default function Home() {
 	return (
 		<PortfolioModeProvider>
 			<TerminalSessionProvider commands={commands} outputs={outputs}>
-				<Header name={profile.displayName.split(' ')[0]} />
+				<Header  />
 				<HomeMotion>
 					<Hero profile={profile} socialMedia={Object.values(socialMedia)} />
 					<About summary={profile.summary} skills={Object.values(skills)} />

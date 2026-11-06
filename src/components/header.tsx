@@ -20,8 +20,6 @@ import { cn } from '@/lib/utils'
 import { usePortfolioMode } from '@/providers/portfolio-mode'
 import type { MenuItem } from '@/types/menu-item'
 
-type Props = { name: string }
-
 type MenuProps = { menuItems: ReadonlyArray<MenuItem>; isTerminal: boolean }
 
 const DesktopNav = ({ menuItems, isTerminal }: MenuProps) => (
@@ -87,7 +85,7 @@ const MobileMenu = ({ menuItems, isTerminal }: MenuProps) => (
 	</Drawer>
 )
 
-export const Header = ({ name }: Props) => {
+export const Header = () => {
 	const { isTerminal } = usePortfolioMode()
 
 	return (
@@ -99,7 +97,7 @@ export const Header = ({ name }: Props) => {
 				Ir para o conteúdo
 			</a>
 			<div className="mx-auto flex min-h-20 w-full min-w-0 max-w-5xl items-center gap-2 px-4 py-3 sm:gap-5 sm:px-8">
-				<TerminalToggle name={name} />
+				<TerminalToggle />
 				<DesktopNav menuItems={menuItems} isTerminal={isTerminal} />
 				<div
 					className={cn(

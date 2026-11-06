@@ -11,9 +11,8 @@ import {
 import { cn } from '@/lib/utils'
 import { usePortfolioMode } from '@/providers/portfolio-mode'
 
-type Props = { name: string }
 
-export const TerminalToggle = ({ name }: Props) => {
+export const TerminalToggle = () => {
 	const { isTerminal, setTerminal } = usePortfolioMode()
 
 	return (
@@ -37,7 +36,7 @@ export const TerminalToggle = ({ name }: Props) => {
 						)}
 					>
 						<Terminal className="h-4 w-4 text-brand" aria-hidden="true" />
-						{name}
+						Terminal
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" sideOffset={8}>
