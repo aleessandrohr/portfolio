@@ -3,6 +3,7 @@
 import { ArrowUpRight, Play } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { TerminalText } from '@/components/terminal-text'
 import {
 	Dialog,
 	DialogContent,
@@ -10,6 +11,9 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
+import { usePortfolioMode } from '@/providers/portfolio-mode'
+import { useTerminalSession } from '@/providers/terminal-session'
+import { getDemoCommand } from '@/utils/terminal-commands'
 import { Iframe } from './iframe'
 import { actionClassName } from './styles'
 
@@ -29,6 +33,9 @@ export const DemoDialog = ({
 	websiteUrl,
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
+	const { isTerminal } = usePortfolioMode()
+	const { recordCommand } = useTerminalSession()
+	const command = getDemoCommand(id)
 
 	// O hash `#<id>-demo` abre a demonstração e permite compartilhar o link.
 	useEffect(() => {
@@ -44,11 +51,22 @@ export const DemoDialog = ({
 	}, [id])
 
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+		<Dialog
+			open={isOpen}
+			onOpenChange={open => {
+				setIsOpen(open)
+				if (open && isTerminal) recordCommand(command)
+				if (!open && window.location.hash === `#${id}-demo`) {
+					const url = new URL(window.location.href)
+					url.hash = ''
+					window.history.replaceState(window.history.state, '', url)
+				}
+			}}
+		>
 			<DialogTrigger asChild>
 				<button type="button" className={actionClassName}>
 					<Play className="h-4 w-4 shrink-0" aria-hidden="true" />
-					Demo
+					<TerminalText command={command}>Demo</TerminalText>
 				</button>
 			</DialogTrigger>
 			<DialogContent className="top-2 left-2 h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-none translate-x-0 translate-y-0 grid-rows-[auto_1fr] gap-0 overflow-hidden rounded-2xl border-brand/30 bg-card p-0 shadow-2xl shadow-brand/10 sm:top-[50%] sm:left-[50%] sm:h-[88dvh] sm:max-h-[88dvh] sm:w-[92vw] sm:max-w-6xl sm:translate-x-[-50%] sm:translate-y-[-50%] sm:rounded-2xl">

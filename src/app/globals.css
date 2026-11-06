@@ -12,6 +12,13 @@
 	}
 }
 
+/* O brilho do convite fica restrito ao botão e só roda com movimento permitido. */
+@keyframes terminal-invitation {
+	0%, 10% { transform: translateX(-200%); opacity: 0; }
+	15% { opacity: 1; }
+	35%, 100% { transform: translateX(300%); opacity: 0; }
+}
+
 /* Evita o flash antes da hidratação; o Motion controla a entrada. */
 @keyframes motion-startup-fallback {
 	to { visibility: visible; }

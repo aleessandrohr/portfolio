@@ -32,9 +32,13 @@ configs/menu-items.ts ────► components/header.tsx (navegação global)
 ```
 constants/* ─┬─► home (atual)
              ├─► /projetos/[slug] e /curriculo (planejados)
-             └─► terminal (planejado, comandos fixos)
+             └─► modo terminal na home (atual, destinos dos mesmos links)
 ```
 A Fase 1 elimina as duplicações listadas acima: título, resumo e curso passam a ter uma única origem.
+
+## Terminal integrado
+
+A página combina `configs/terminal.ts` com os links de `profile` e `projects`, passando os comandos ao provider. Menu, botões e prompt usam os mesmos destinos públicos. `utils/terminal-commands.ts` apenas resolve entrada e sugestões, sem importar dados de conteúdo.
 
 ## Contato
 

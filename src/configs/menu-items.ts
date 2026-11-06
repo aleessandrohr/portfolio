@@ -1,24 +1,10 @@
+import { terminalNavigation } from '@/configs/terminal'
 import type { MenuItem } from '@/types/menu-item'
 
-export const menuItems = [
-	{
-		href: '#about',
-		value: 'Sobre',
-	},
-	{
-		href: '#projects',
-		value: 'Projetos',
-	},
-	{
-		href: '#experiences',
-		value: 'Experiência',
-	},
-	{
-		href: '#education',
-		value: 'Educação',
-	},
-	{
-		href: '#contact',
-		value: 'Contato',
-	},
-] as const satisfies ReadonlyArray<MenuItem>
+export const menuItems = Object.values(terminalNavigation)
+	.filter(item => item.href !== '#home')
+	.map(item => ({
+		href: item.href,
+		value: item.label,
+		command: item.command,
+	})) satisfies ReadonlyArray<MenuItem>

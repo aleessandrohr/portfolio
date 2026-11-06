@@ -1,15 +1,15 @@
 # Plano: novo portfólio (UI/UX, cases, currículo e terminal)
 
 ## Situação do plano
-Atualizado em **05/11/2026**: fases **1 e 2 concluídas**, com escopo consolidado durante a renovação guiada. As fases 3, 4 e 5 continuam planejadas; páginas de case, currículo e terminal funcional não fazem parte da entrega concluída.
+Atualizado em **06/11/2026**: fases **1 e 2 concluídas**. A fase 5 está concluída, com o escopo reformulado para um prompt integrado ao hero. A fase 3 fica em espera até haver mais projetos, principalmente mais robustos. A fase 4 será feita após a fase 5.
 
 | Fase | Situação |
 |---|---|
 | 1 — Fonte única de dados | Concluída |
 | 2 — Layout e home | Concluída |
-| 3 — Páginas de case | Planejada |
-| 4 — Currículo e PDF | Planejada |
-| 5 — Modo terminal | Planejada |
+| 3 — Páginas de case | Em espera, até haver mais projetos robustos |
+| 4 — Currículo e PDF | Planejada para depois da fase 5 |
+| 5 — Modo terminal integrado ao hero | Concluída |
 
 ## Contexto inicial
 No início do plano, o site (`aleessandrohr.dev.br`, Next 14 App Router, Tailwind, shadcn, Vercel) era uma página única com resumo, experiências, in.orbit e Letmeask. Faltavam Workspace, Digitaliza Aí e a atuação com IA. O site e o PDF também divergiam no nome do curso. A base de dados e a home foram atualizadas nas fases 1 e 2.
@@ -29,7 +29,7 @@ Decisões já tomadas:
 - Educação: **sem página própria por enquanto**. Ela aparece num card na home e no `/curriculo`.
 
 ## Fase 1: uma única fonte de dados
-**Concluída em 05/11/2026.** A home e os metadados consomem `src/constants/`; cases, currículo e terminal reutilizarão essa base quando forem implementados.
+**Concluída em 05/11/2026.** A home e os metadados consomem `src/constants/`; o modo terminal reutiliza os destinos dessa base; cases e currículo a utilizarão quando forem implementados.
 
 - `constants/profile.ts` (novo): nome, título ("Desenvolvedor Full Stack Pleno", editável só aqui), foto, cidade, e-mail, site, links, resumo, frase do hero e descrição para SEO. Campos sem consumidor, como status, stack de destaque e highlights, foram removidos. Na revisão da Fase 2, a faixa de números foi removida da home; esses fatos aparecem contextualizados em experiências e projetos: 2 anos na Anuntech, promoção de Júnior a Pleno, MVP em 4 dias, 5º de 11 no hackathon.
 - `constants/skills.ts`: grupos de Linguagens, Front-end, Back-end, Mobile, Banco de Dados, Infra & DevOps, IA e Outros. A interface usa badges neutros, sem mapa de cores por tecnologia.
@@ -49,8 +49,8 @@ Decisões já tomadas:
 - `components/header.tsx`: substitui `profile.tsx`.
   - Barra sticky de vidro, arredondada e com margens, conteúdo em uma linha no desktop e Drawer no celular. Foto e cargo ficam no hero.
   - Navegação por âncoras: Sobre, Projetos, Experiência, Educação e Contato. Links para futuras páginas serão incluídos nas fases correspondentes.
-  - Controle `>_ Alessandro`, em mono, com semântica de switch desativado e indicação de terminal em breve, além do `ModeToggle`.
-- `components/footer.tsx`: identificação, ano e link para o topo. Contatos e redes ficam nas seções da home.
+  - Controle de terminal em mono, inicialmente desativado na fase 2 e ativado na fase 5, além do `ModeToggle`. A entrada preserva `>_ Alessandro`, com borda azul, brilho periódico restrito ao botão e tooltip de exploração. O brilho respeita movimento reduzido e para após ativar o terminal.
+- `components/footer.tsx`: identificação, ano e link padrão para o topo. No modo terminal, `app/(home)/_components/terminal-return.tsx` também oferece um botão flutuante para voltar e focar o input do hero, alinhado à largura máxima do conteúdo. Contatos e redes ficam nas seções da home.
 - Inter como fonte principal e JetBrains Mono, via `next/font`, no controle de terminal, badges, períodos e endereço do GitHub. Ver [design system](../frontend/design-system.md).
 - Temas claro e escuro refinados: base grafite no escuro; fundo cinza claro e cards brancos no claro; azul com luminosidade por tema, vidro seletivo e raios por função.
 - Animações com Motion: hero ocupa a primeira tela, textos principais aparecem letra a letra e as seções têm entrada progressiva. Respeita movimento reduzido e mantém o conteúdo acessível sem JavaScript.
@@ -82,33 +82,35 @@ Decisões já tomadas:
   - layout em lista, como no PDF.
 - O PDF passa a sair do próprio site.
 
-## Fase 5: modo terminal
-- `components/terminal/commands.ts`: registro puro de comandos, testável e sem React, que recebe os dados de `constants/`.
-  - `help`, `whoami`, `cat about.json`, `ls [projetos]`, `cat projetos/<slug>` / `open <slug>`, `experiencia`, `educacao`, `skills`
-  - `curriculo` (navega), `contato`, `theme <claro|escuro|sistema>` (via `next-themes`), `history`, `clear`
-- `components/terminal/terminal.tsx` (client):
-  - **Interação:** prompt `~/alessandro $`, histórico com ↑/↓, Tab completa, Esc fecha.
-  - **Atalhos clicáveis:** botões de comando, para celular e para quem não é dev.
-  - **Acessibilidade:** saída com `aria-live="polite"` e foco no input.
-- `components/terminal/terminal-dialog.tsx`: abre por cima da página com o `ui/dialog` atual, pelo botão `>_` ou por Ctrl+`.
-- `app/terminal/page.tsx`: versão em tela cheia, para mandar o link direto.
+## Fase 5: modo terminal integrado ao hero
+
+Escopo reformulado pelo autor em 06/11/2026. O site preserva o hero, a foto, os cards, as seções, os temas e a identidade visual. O controle `>_` alterna rótulos de interface para comandos e exibe uma linha de comando dentro do hero. A decisão está no [ADR-0012](../decisions/ADR-0012-terminal-integrado-ao-hero.md).
+
+- **Navegação:** `cd ~`, `cd ~/sobre`, `cd ~/projetos`, `cd ~/experiencia`, `cd ~/educacao` e `cd ~/contato` levam às âncoras existentes. Os botões continuam disponíveis.
+- **Links:** `xdg-open email`, `xdg-open github`, `xdg-open linkedin` e `xdg-open <id>` usam os mesmos destinos públicos dos links visuais. `demo <id>` abre o dialog existente, quando há demonstração.
+- **Ajuda:** `help` mostra comandos clicáveis no hero; `clear` limpa a resposta. ↑/↓ percorrem o histórico da sessão e Tab completa os comandos cadastrados.
+- **Dados:** a página monta os comandos a partir de `configs/terminal.ts`, `profile` e `projects`. Não há conteúdo profissional duplicado nem destinos para páginas ainda não implementadas.
+- **Execução:** `utils/terminal-commands.ts` resolve e completa os comandos sem React nem efeitos. `PortfolioModeProvider` compartilha o modo; `TerminalSessionProvider` reúne o histórico, o último resultado e as ações explícitas de registro e execução. Ambos ficam restritos à home.
+- **Interface:** `hero/command-line.tsx` coordena o prompt e deriva ajuda e feedback da sessão; `hero/command-input.tsx` renderiza o formulário acessível. `TerminalText`, `TerminalLink` e `TerminalToggle` atendem os componentes que participam do modo.
+- **URL:** `/?mode=terminal` abre o modo; as âncoras e os links de demonstração continuam compartilháveis. A home visual permanece como padrão e como alternativa sem JavaScript.
+- **Limites:** é uma navegação por comandos cadastrados. Não há execução de shell, API, LLM, sistema de arquivos, dialog de terminal ou rota `/terminal` nesta entrega.
 
 ## Pendências de conteúdo (não bloqueiam o código)
 - Detalhes adicionais do Workspace: outros módulos e uso de IA no desenvolvimento.
 - Workspace e Digitaliza Aí permanecem sem imagem e sem link de site no estado atual. Uma futura imagem do Digitaliza Aí deve respeitar as regras de marca de terceiros.
 
 ## Arquivos principais
-- **Novos:** `constants/profile.ts`, `constants/skills.ts`, `configs/menu-items.ts`, `lib/dayjs.ts`, `utils/experience-timeline.ts`, `components/header.tsx`, `components/footer.tsx`, `app/(home)/_components/*`, `app/projetos/[slug]/_components/case-section.tsx`, `components/terminal/*`, `app/projetos/[slug]/page.tsx`, `app/curriculo/page.tsx`, `app/terminal/page.tsx`, `app/sitemap.ts`.
+- **Novos:** `constants/profile.ts`, `constants/skills.ts`, `configs/menu-items.ts`, `lib/dayjs.ts`, `utils/experience-timeline.ts`, `components/header.tsx`, `components/footer.tsx`, `app/(home)/_components/*`, `app/projetos/[slug]/_components/case-section.tsx`, `app/projetos/[slug]/page.tsx`, `app/curriculo/page.tsx`, `app/sitemap.ts`.
 - **Alterados:** `constants/projects.ts`, `constants/educations.ts`, `constants/experiences.ts` (se precisar), `app/(home)/_components/projects/project-card/index.tsx`, `app/(home)/_components/experiences/experience.tsx`, `app/(home)/page.tsx`, `app/layout.tsx`, `app/globals.css`, `tailwind.config.ts`, `package.json`.
 - **Removido:** `components/profile.tsx` (substituído pelo `header`). `configs/menu-items.ts` guarda a navegação; o agregador `knowledge` foi removido.
 
 ## Execução
-As fases 1 e 2 foram implementadas em conjunto durante a renovação guiada e estão concluídas. Cada próxima fase deve deixar o site funcionando. Ordem restante: 3 → 4 → 5.
+As fases 1 e 2 foram implementadas em conjunto durante a renovação guiada e estão concluídas. Cada próxima fase deve deixar o site funcionando. Ordem definida pelo autor: 5 → 4; a fase 3 permanece em espera.
 
 ## Verificação
 - A cada fase: Biome apenas nos arquivos alterados, `bun run type-check` e `bun run build`, seguindo a [definição de pronto](../development/definition-of-done.md). Com servidor ativo, o build deve rodar em cópia isolada.
 - Reutilizar o servidor existente na porta 3000; iniciar `bun dev` apenas se não houver uma instância do projeto. Conferir as rotas já implementadas; as verificações abaixo de cases, currículo e terminal se aplicam às fases futuras:
-  - home, `/projetos/<cada slug>`, `/curriculo` e `/terminal` nos temas claro e escuro, em 375 px e em desktop;
+  - home, `/projetos/<cada slug>`, `/curriculo` nos temas claro e escuro, em 375 px e em desktop;
   - a pré-visualização de impressão do `/curriculo` contra o PDF atual, lado a lado;
-  - o terminal: todos os comandos, ↑/↓, Tab, Esc, Ctrl+`, atalhos clicáveis e leitor de tela (aria-live).
+  - o terminal: alternância sem mudar o layout, destinos dos comandos, ↑/↓, Tab e Shift+Tab, ajuda clicável e feedback com `aria-live`.
 - Deploy de preview na Vercel antes de ir para `master`.

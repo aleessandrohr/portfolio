@@ -7,7 +7,7 @@ A estrutura e o lugar de cada coisa estão descritos em [frontend/application-st
 - **Um componente exportado por arquivo.** Subcomponentes pequenos e privados podem ficar no mesmo arquivo. Se crescerem, vão para `<domínio>/components/`.
 - **Pasta só quando houver mais de um arquivo:** `about.tsx` é um arquivo solto; `hero/` é uma pasta porque reúne a seção e `letter-reveal.tsx`.
 - **Pastas compartilhadas:** conteúdo em `src/constants/`, configurações em `src/configs/`, integrações de bibliotecas em `src/lib/` e utilitários puros em `src/utils/`. Constantes e helpers exclusivos de um componente permanecem no domínio.
-- **Agrupe por domínio, não por tipo:** `components/terminal/{terminal.tsx, commands.ts, terminal-dialog.tsx}`, e não `hooks/`, `types/` e `utils/` espalhados.
+- **Agrupe por domínio, não por tipo:** `app/(home)/_components/hero/{index.tsx, letter-reveal.tsx, command-line.tsx}`, e não `hooks/`, `types/` e `utils/` espalhados.
 - **Tipos de domínio ficam em `src/types/`:** um arquivo por domínio (`src/types/project.ts`, `src/types/experience.ts`, `src/types/profile.ts`, etc.). Tipos exclusivos de UI (`type Props`) permanecem locais ao componente.
 - **Arquivos especiais do Next** (`page.tsx`, `layout.tsx`, `route.ts`, `opengraph-image.tsx`, `sitemap.ts`) seguem os nomes exigidos pelo framework.
 - **Assets:** `public/static/assets/<nome-do-projeto>.png`, em kebab-case. Nada de imagem dentro de `src/`.

@@ -1,3 +1,5 @@
+import { TerminalText } from '@/components/terminal-text'
+import { terminalNavigation } from '@/configs/terminal'
 import type { SkillGroup } from '@/types/skill'
 
 type Props = {
@@ -16,7 +18,9 @@ export const About = ({ summary, skills }: Props) => (
 	>
 		<div data-reveal className="min-w-0">
 			<h2 id="about-title" className="font-semibold text-2xl tracking-tight">
-				Sobre
+				<TerminalText command={terminalNavigation.about.command}>
+					Sobre
+				</TerminalText>
 			</h2>
 			<p className="mt-5 hyphens-auto text-justify text-[15px] text-muted-foreground leading-relaxed">
 				{summary}

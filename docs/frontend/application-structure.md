@@ -10,6 +10,7 @@ src/
 │   └── (home)/               # grupo organizacional; mantém a URL /
 │       ├── page.tsx          # compõe as seções e fornece os dados
 │       └── _components/
+│           ├── terminal-return.tsx # retorno flutuante ao input do hero
 │           ├── about.tsx
 │           ├── contact.tsx
 │           ├── education.tsx
@@ -17,7 +18,9 @@ src/
 │           ├── pixel-grid.tsx  # compartilhado apenas por hero e contato
 │           ├── hero/
 │           │   ├── index.tsx
-│           │   └── letter-reveal.tsx
+│           │   ├── letter-reveal.tsx
+│           │   ├── command-line.tsx  # estado e interação do prompt
+│           │   └── command-input.tsx # formulário acessível
 │           ├── experiences/
 │           │   ├── index.tsx   # seção de experiências
 │           │   └── experience.tsx
@@ -38,10 +41,10 @@ src/
 │   └── icon.tsx
 ├── constants/                # conteúdo profissional compartilhado
 ├── types/                    # contratos de domínio
-├── configs/                  # menu do header
+├── configs/                  # menu do header e comandos de navegação
 ├── lib/                      # Day.js e integração cn() do shadcn
-├── utils/                    # utilitários compartilhados de datas
-└── providers/theme.tsx
+├── utils/                    # datas e resolução de comandos
+└── providers/                # tema e modo de apresentação da home
 ```
 
 ## Onde colocar código novo
@@ -61,12 +64,16 @@ src/
 
 O header importa o menu global de `configs/menu-items.ts`. A página fornece o primeiro nome ao header e o perfil ao footer. Projeto e experiência pertencem à home; páginas futuras terão sua própria apresentação, usando os mesmos dados e tipos.
 
-Educação e Experiências são seções independentes; não há um wrapper `Trajectory`. `home-motion.tsx` reúne o wrapper cliente e seus helpers privados, sem uma pasta para separar leitura de tokens e controlador. Os componentes da home continuam sendo Server Components, com exceção do movimento, carrossel, dialog e iframe.
+Educação e Experiências são seções independentes; não há um wrapper `Trajectory`. `home-motion.tsx` reúne o wrapper cliente e seus helpers privados, sem uma pasta para separar leitura de tokens e controlador. Os componentes da home continuam sendo Server Components, com exceção do movimento, carrossel, dialog, iframe e prompt do hero.
 
 Os estilos de apresentação usam Tailwind. As regras de inicialização e acessibilidade das animações ficam em `globals.css`; não há arquivo `home.css`. Veja [styling-guidelines](styling-guidelines.md).
 
 `(home)` não cria `/home`, e `_components` não gera rotas. Esses nomes seguem as [convenções do App Router](https://nextjs.org/docs/14/app/building-your-application/routing/colocation). Pastas adicionais só surgem quando existe código real para agrupá-las; não crie diretórios vazios para necessidades futuras.
 
+## Terminal integrado
+
+`components/terminal-{toggle,text,link}.tsx` atendem várias seções. O modo fica em `providers/portfolio-mode.tsx` e a sessão em `providers/terminal-session.tsx`, montados na home; configuração em `configs/terminal.ts`, contrato em `types/terminal.ts` e resolver puro em `utils/terminal-commands.ts`.
+
 ## Próximas páginas
 
-`app/projetos/[slug]/`, `app/curriculo/` e `app/terminal/` serão irmãos de `(home)`. Cada rota terá seus próprios componentes privados. Uma página não importa detalhes privados de outra; dados e funções compartilhados continuam nas pastas globais. Veja o [plano](../plans/redesign-portfolio.md).
+`app/projetos/[slug]/` e `app/curriculo/` serão irmãos de `(home)`. O terminal está integrado à home, sem rota própria. Cada rota terá seus próprios componentes privados. Uma página não importa detalhes privados de outra; dados e funções compartilhados continuam nas pastas globais. Veja o [plano](../plans/redesign-portfolio.md).

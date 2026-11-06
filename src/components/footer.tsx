@@ -1,5 +1,7 @@
 import { ArrowUp } from 'lucide-react'
-import Link from 'next/link'
+import { TerminalLink } from '@/components/terminal-link'
+import { TerminalText } from '@/components/terminal-text'
+import { terminalNavigation } from '@/configs/terminal'
 import type { Profile } from '@/types/profile'
 
 type Props = { profile: Profile }
@@ -9,12 +11,15 @@ export const Footer = ({ profile }: Props) => (
 		<p>
 			© {new Date().getFullYear()} {profile.fullName}
 		</p>
-		<Link
-			href="#home"
-			className="inline-flex items-center gap-1.5 font-medium transition-colors hover:text-brand"
+		<TerminalLink
+			command={terminalNavigation.home.command}
+			href={terminalNavigation.home.href}
+			className="inline-flex shrink-0 items-center gap-1.5 font-medium transition-colors hover:text-brand"
 		>
-			Voltar ao topo
+			<TerminalText command={terminalNavigation.home.command}>
+				Voltar ao topo
+			</TerminalText>
 			<ArrowUp className="h-4 w-4" aria-hidden="true" />
-		</Link>
+		</TerminalLink>
 	</footer>
 )

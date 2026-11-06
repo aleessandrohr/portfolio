@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
-import Link from 'next/link'
+import { TerminalLink } from '@/components/terminal-link'
+import { TerminalText } from '@/components/terminal-text'
 import {
 	Card,
 	CardDescription,
@@ -9,6 +10,7 @@ import {
 } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import type { Project as ProjectType } from '@/types/project'
+import { getOpenCommand } from '@/utils/terminal-commands'
 import { Cover } from './cover'
 import { DemoDialog } from './demo-dialog'
 import { actionClassName } from './styles'
@@ -67,16 +69,17 @@ export const ProjectCard = ({
 						/>
 					)}
 					{websiteUrl && (
-						<Link
+						<TerminalLink
 							className={actionClassName}
+							command={getOpenCommand(id)}
 							href={websiteUrl}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Site
+							<TerminalText command={getOpenCommand(id)}>Site</TerminalText>
 							<span className="sr-only">(abre em nova aba)</span>
 							<ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-						</Link>
+						</TerminalLink>
 					)}
 				</CardFooter>
 			)}

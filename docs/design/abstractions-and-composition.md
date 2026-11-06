@@ -19,18 +19,9 @@ Seções e páginas (app/)         home, case, currículo, terminal         ← 
 - **Subcomponente privado:** `project/components/iframe.tsx` isola o estado de carregamento. O `Project` não precisa saber como o iframe carrega.
 - **Partes opcionais por presença de dado:** `Project` só monta o dialog se houver `iframeUrl`, e `Experience` só mostra o rodapé se houver `skills`.
 
-## Composição planejada
-### Um terminal, dois contêineres (Fase 5)
-```
-commands.ts  (puro)
-     │
-terminal.tsx (interface: entrada, saída, histórico, interpretação de CommandResult)
-     │
-     ├── terminal-dialog.tsx  → aberto sobre qualquer página (botão >_, Ctrl+`)
-     └── app/terminal/page.tsx → tela cheia, link direto
-```
-- O `terminal.tsx` não sabe se está num dialog ou numa página.
-- O contêiner passa só o que difere, como `onClose`.
+## Terminal integrado ao hero
+
+`PortfolioModeProvider` compartilha a preferência de apresentação; `TerminalSessionProvider` reúne os comandos, histórico e último resultado. Ambos envolvem a home, com contextos separados para que alterações de sessão não notifiquem consumidores que só leem o modo. `TerminalText` troca rótulos, `TerminalLink` preserva links nativos e registra comandos, e `hero/command-line.tsx` usa o mesmo executor. O hero e as demais seções mantêm o layout visual. A decisão está no [ADR-0012](../decisions/ADR-0012-terminal-integrado-ao-hero.md).
 
 ### Uma fonte de dados, várias visões (Fases 1 a 5)
 As visões consomem os mesmos dados de `constants/`, sem um agregador intermediário:

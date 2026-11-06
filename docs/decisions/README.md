@@ -28,5 +28,6 @@ Não escreva um ADR para escolhas triviais ou facilmente reversíveis.
 | [0009](ADR-0009-implementacao-local-das-rotas.md) | Implementação exclusiva junto de cada rota | Substituído por ADR-0010 |
 | [0010](ADR-0010-componentes-da-home-por-secao.md) | Componentes da home agrupados por seção | Aceito |
 | [0011](ADR-0011-modelos-das-constantes.md) | Contratos de conteúdo por domínio | Aceito |
+| [0012](ADR-0012-terminal-integrado-ao-hero.md) | Terminal integrado ao hero | Aceito |
 
 ADRs a escrever estão listados no [roadmap](../DOCUMENTATION_ROADMAP.md#adrs-a-registrar).

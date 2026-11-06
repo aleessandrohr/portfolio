@@ -20,11 +20,6 @@ O site é estático e quase não tem pontos de falha em tempo de execução. Tra
 ### Iframe da demonstração (Fase 2 ou 3)
 - **Tempo limite:** após uns 10 s sem `onLoad`, trocar o skeleton por "Não foi possível carregar a demonstração" e mostrar o botão "Abrir site" em destaque.
 
-### Terminal (Fase 5)
-| Situação | Resposta na saída |
-|---|---|
-| Comando desconhecido | `comando não encontrado: <x>. Digite help.` e uma sugestão do comando mais próximo, se houver |
-| Argumento inválido | uso correto do comando (`usage`) |
-| Projeto inexistente em `cat`/`open` | `projeto não encontrado` e a lista de `ls projetos` |
+### Terminal integrado
 
-Os comandos devolvem `{ type: 'error', message }` e nunca lançam exceção. Ver [design-patterns](design-patterns.md).
+Comandos ou argumentos não cadastrados devolvem `{ type: 'error', message }`, sem lançar exceção. A mensagem orienta a executar `help`; a ajuda contém apenas comandos e destinos existentes. Projetos sem site ou demonstração não geram comandos para esses links. O input nunca interpreta código ou comandos do sistema.

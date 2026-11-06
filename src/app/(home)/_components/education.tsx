@@ -1,4 +1,6 @@
 import { GraduationCap } from 'lucide-react'
+import { TerminalText } from '@/components/terminal-text'
+import { terminalNavigation } from '@/configs/terminal'
 import type { Education as EducationType } from '@/types/education'
 import { formatPeriod, getAcademicPeriod } from '@/utils/experience-timeline'
 
@@ -15,7 +17,9 @@ export const Education = ({ items }: Props) => (
 			id="education-title"
 			className="mb-6 font-semibold text-2xl tracking-tight"
 		>
-			Educação
+			<TerminalText command={terminalNavigation.education.command}>
+				Educação
+			</TerminalText>
 		</h2>
 		{items.map(item => (
 			<article

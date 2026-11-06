@@ -7,6 +7,8 @@
 
 A home fica no grupo `(home)`, que não altera a URL `/`. A pasta `_components` é privada. O menu pertence ao header global e fica em `src/configs/menu-items.ts`. As futuras rotas ficam em pastas irmãs, sem importar a implementação privada da home.
 
+O modo terminal usa `/?mode=terminal` e mantém as mesmas seções da home. Não cria uma rota `/terminal`; o sitemap e a URL canônica permanecem os da home.
+
 ## Metadados e SEO
 - **Metadados globais:** ficam em `src/app/layout.tsx`, no `metadata`, com `title.template` igual a `'%s | Alessandro Henrique Ramos'`.
 - **Palavras-chave:** ficam em `constants/seo.ts`, reunindo temas de atuação, termos sobre IA e as tecnologias de `constants/skills.ts`. Nome e cargo vêm de `constants/profile.ts`.
@@ -21,7 +23,7 @@ A home fica no grupo `(home)`, que não altera a URL `/`. A pasta `_components` 
 |---|---|---|
 | `/projetos/[slug]` | 3 | `generateStaticParams` a partir de `projects`, `generateMetadata` por projeto |
 | `/curriculo` | 4 | página com CSS de impressão |
-| `/terminal` | 5 | terminal em tela cheia |
+
 
 Regras para rotas novas:
 - **Nome em português**, minúsculo e com hífen (`/projetos`, `/curriculo`).

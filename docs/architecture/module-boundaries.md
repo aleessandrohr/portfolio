@@ -12,7 +12,7 @@
 | `lib/` | bibliotecas externas | componentes, `app/`, conteúdo de domínio |
 | `utils/` | `lib/`, `types/`, `configs/` | componentes, `app/` |
 | `types/` | tipos de `components/icon` (`IconName`) | valores de runtime, `constants/`, componentes, `app/` |
-| `providers/` | bibliotecas externas | `constants/`, componentes de domínio |
+| `providers/` | bibliotecas externas, `types/`, `configs/` e `utils/`; conteúdo por props | `constants/`, componentes de domínio e implementações privadas de rotas |
 
 Exceção existente: `types/social-media.ts` importa o **tipo** `IconName` de `components/icon`. Importar tipo é aceitável. Importar valor de componente não é.
 
@@ -20,4 +20,4 @@ Exceção existente: `types/social-media.ts` importa o **tipo** `IconName` de `c
 - **Implementação local fica na rota:** a home usa `app/(home)/_components/`, agrupados por seção. Header e footer são globais, e o menu do header fica em `src/configs/`. Cards de projeto e experiência são locais à home. Código compartilhado não importa essas pastas. Extraia para `src/components/`, `src/configs/` ou `src/utils/` quando houver uso real por mais de uma página.
 - **Componentes de domínio recebem dados por props.** Não importam o objeto de constants diretamente. Assim, o mesmo componente serve para listas diferentes.
 - **`components/ui/` é terceirizado (shadcn).** Ajuste por composição ou por `className`, não editando o arquivo.
-- **O registro de comandos do terminal (Fase 5) não importa React.** A camada visual consome o registro, nunca o contrário.
+- **O resolver de comandos do terminal não importa React.** A camada visual consome o registro, nunca o contrário.

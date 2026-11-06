@@ -21,11 +21,11 @@ Como o código é pensado *por dentro* dos módulos. A divisão em camadas e o q
 ## Hoje
 O núcleo é pequeno: objetos em `constants/` e componentes que os renderizam. Os utilitários de datas ficam em `utils/experience-timeline.ts`. Na home, `home-motion.tsx` coordena animações, o carrossel controla a rotação e `projects/project-card/demo-dialog.tsx` sincroniza o dialog com o hash da URL.
 
-## Planejado ([plano](../plans/redesign-portfolio.md))
+## Peças implementadas
 | Peça | Fase | Natureza | Depende de |
 |---|---|---|---|
 | `utils/experience-timeline.ts` | 2 | pura: datas → ordem, duração e período acadêmico | `lib/dayjs.ts`, `types/period.ts` |
-| `components/terminal/commands.ts` | 5 | pura: `(entrada, contexto) → resultado` | dados de `constants/*` fornecidos pelo consumidor |
-| `components/terminal/terminal.tsx` | 5 | efeitos: teclado, foco, tema, navegação | `commands.ts` |
+| `utils/terminal-commands.ts` | 5 | pura: `(entrada, comandos) → resultado` | destinos fornecidos pela página |
+| `app/(home)/_components/hero/command-line.tsx` | 5 | input, teclado, ajuda e feedback | provider e resolver puro |
 
 Os padrões usados nessas peças estão em [design-patterns](design-patterns.md); como elas se compõem, em [abstractions-and-composition](abstractions-and-composition.md); e como falham, em [error-handling](error-handling.md).

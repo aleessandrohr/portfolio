@@ -20,7 +20,7 @@ export const projects = { ... } as const satisfies Record<string, Project>
 Use um `Record<chave, valor>` para escolher uma apresentação a partir de um dado. Exemplo atual: `kindIcons[kind]` escolhe o ícone da capa em `app/(home)/_components/projects/project-card/cover.tsx`. Evite cadeias de `if` e `switch` por nome de projeto.
 
 ### Estado sincronizado com a URL
-O dialog da demonstração abre quando o hash é `#<id>-demo` e escuta `hashchange`, para que o link possa ser compartilhado. Use o mesmo padrão para qualquer estado que valha compartilhar, como `#terminal` no plano.
+O dialog da demonstração abre quando o hash é `#<id>-demo` e escuta `hashchange`, para que o link possa ser compartilhado. Use o mesmo padrão para qualquer estado que valha compartilhar, como o parâmetro `?mode=terminal` da home.
 
 ### Wrapper de provedor
 `providers/theme.tsx` envolve o `next-themes` num componente `'use client'`. Isso permite usá-lo a partir do `layout.tsx`, que é Server Component.
@@ -28,33 +28,11 @@ O dialog da demonstração abre quando o hash é `#<id>-demo` e escuta `hashchan
 ### Mapa estático por nome
 `<Icon name>` (`components/icon.tsx`) escolhe o ícone num mapa `icons` com os ícones usados (`github`, `linkedin`, `mail`), para dados que guardam o ícone como string (`social-media.ts`). `IconName` sai das chaves do mapa. Para usar um ícone novo por nome, importe-o do `lucide-react` e inclua-o no mapa. Não use `lucide-react/dynamicIconImports` nem `next/dynamic` dentro do render: o primeiro registra um `import()` por ícone da biblioteca e deixa o dev e o build mais lentos, e o segundo cria um componente novo a cada render.
 
-## Planejados
-### Registro de comandos (Fase 5)
-Os comandos do terminal formam uma tabela, não uma cadeia de `if`:
-```ts
-interface Command {
-	name: string
-	aliases?: Array<string>
-	summary: string                      // aparece no `help`
-	usage?: string
-	complete?: (arg: string) => Array<string>  // Tab
-	run: (args: Array<string>, ctx: CommandContext) => CommandResult
-}
-```
-- **Adicionar um comando** é adicionar uma entrada. `help` e o Tab completion leem a mesma tabela.
-- **`run` é puro:** recebe um `CommandContext` com os dados e devolve uma descrição do resultado. Não executa efeitos.
+## Terminal integrado
 
-### Resultado descritivo (Fase 5)
-O comando não executa efeitos; ele devolve o que o terminal deve fazer:
-```ts
-type CommandResult =
-	| { type: 'output'; lines: Array<OutputLine> }
-	| { type: 'navigate'; href: string }
-	| { type: 'theme'; value: 'light' | 'dark' | 'system' }
-	| { type: 'clear' }
-	| { type: 'error'; message: string }
-```
-O `terminal.tsx` interpreta cada caso. Assim, os comandos ficam testáveis e a interface fica num só lugar.
+A página fornece uma lista de `TerminalCommand` (`command`, `label`, `href`) a partir das configurações de navegação e dos links públicos. As entradas de navegação são nomeadas em `configs/terminal.ts` e reutilizadas por menu, rótulos e registro. Ajuda e autocompletar usam `getTerminalOptions`, que inclui os comandos locais `help` e `clear`. Não há uma cadeia de condicionais por projeto.
+
+`resolveTerminalCommand(entrada, comandos)` devolve um `TerminalResult`: `navigate`, `help`, `clear` ou `error`. O resolver e o autocompletar são puros, em `utils/terminal-commands.ts`; o provider da sessão mantém o último resultado e executa a navegação. `recordCommand` e `runCommand` distinguem registro e execução sem um argumento booleano de controle. Os links nativos apenas registram sua ação no histórico.
 
 ## Anti-padrões
 - **Texto de conteúdo dentro de componente.**

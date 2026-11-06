@@ -1,3 +1,5 @@
+import { TerminalText } from '@/components/terminal-text'
+import { terminalNavigation } from '@/configs/terminal'
 import type { Experience as ExperienceType } from '@/types/experience'
 import { Experience } from './experience'
 
@@ -14,7 +16,9 @@ export const Experiences = ({ items }: Props) => (
 			id="experience-title"
 			className="mb-8 font-semibold text-2xl tracking-tight"
 		>
-			Experiência
+			<TerminalText command={terminalNavigation.experiences.command}>
+				Experiência
+			</TerminalText>
 		</h2>
 		<div className="ml-2 space-y-8 border-border border-l pl-6 sm:pl-8">
 			{items.map(item => (

@@ -1,3 +1,5 @@
+import { TerminalText } from '@/components/terminal-text'
+import { terminalNavigation } from '@/configs/terminal'
 import type { Project as ProjectType } from '@/types/project'
 import { ProjectsCarousel } from './carousel'
 import { ProjectCard } from './project-card'
@@ -27,7 +29,9 @@ export const Projects = ({ projects }: Props) => {
 							id="projects-title"
 							className="font-semibold text-2xl tracking-tight"
 						>
-							Projetos
+							<TerminalText command={terminalNavigation.projects.command}>
+								Projetos
+							</TerminalText>
 						</h2>
 					}
 				/>

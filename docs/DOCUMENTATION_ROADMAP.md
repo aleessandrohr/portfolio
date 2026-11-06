@@ -10,7 +10,7 @@ Estrutura-alvo da pasta `docs/` e situação de cada documento. Um documento só
 
 As fases citadas são as do [plano de redesign](plans/redesign-portfolio.md).
 
-**Situação em 05/11/2026:** fases 1 (fonte única de dados) e 2 (layout e home) concluídas. O plano registra o escopo entregue e os ajustes da renovação guiada. Cases, currículo/PDF e terminal funcional seguem planejados nas fases 3, 4 e 5, respectivamente.
+**Situação em 06/11/2026:** fases 1 e 2 concluídas. O modo terminal da fase 5 está concluído, integrado ao hero conforme o ADR-0012. Cases ficam em espera até haver mais projetos robustos; currículo/PDF será feito após a fase 5.
 
 ## Estrutura
 
@@ -104,7 +104,7 @@ docs/
 | `backend/integrations.md` | ➖ | Não há integração com serviço externo. |
 | `standards/code-style.md` | 🔀 | Em [coding-standards](standards/coding-standards.md) e [lint-and-format](standards/lint-and-format.md). |
 | `standards/code-quality.md` | 🔀 | Em [coding-standards](standards/coding-standards.md) e [definition-of-done](development/definition-of-done.md). |
-| `standards/testing-guidelines.md` | ⏳ | Fase 5, quando `components/terminal/commands.ts` (puro e testável) trouxer o primeiro teste. Hoje não há testes: o CI roda lint, type-check e build. |
+| `standards/testing-guidelines.md` | ⏳ | Quando houver uma suíte de testes versionada. O resolver puro do terminal permite verificações isoladas; o CI continua com lint, type-check e build. |
 | `product/` (pasta) | ➖ | Um portfólio não tem produto com usuários, papéis e regras de negócio. |
 | `product/product-overview.md` | ➖ | O público e o objetivo do site estão em [frontend/ui-ux-guidelines](frontend/ui-ux-guidelines.md); a visão de futuro, no [plano](plans/redesign-portfolio.md). |
 | `product/business-rules.md` | 🔀 | Em [standards/content-guidelines](standards/content-guidelines.md) (o que pode ser publicado). |
@@ -114,7 +114,7 @@ docs/
 | `operations/migrations.md` | ➖ | Não há banco nem schema. |
 
 ## ADRs
-Todos os registros de decisão estão em [decisions/](decisions/README.md). A sequência está completa de 0001 a 0007: o 0001 é o template e os demais seguem o índice do README.
+Todos os registros de decisão estão em [decisions/](decisions/README.md). A sequência vai de 0001 a 0012: o 0001 é o template e os demais seguem o índice do README.
 
 Ao tomar uma nova decisão estrutural, crie o próximo número livre com o [template](decisions/ADR-0001-template.md).
 

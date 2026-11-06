@@ -18,10 +18,11 @@ Meta: WCAG 2.1 AA.
 - **Toque:** alvos com pelo menos 40 a 44 px no celular.
 - **Movimento automático:** conteúdo que se move sozinho deve parar com o mouse e com o foco por teclado e respeitar `prefers-reduced-motion`. O carrossel de projetos (`home/projects-carousel.tsx`) não tem botão de pausa, por decisão de design. A WCAG 2.2.2 pede um mecanismo de pausa para movimento que dura mais de 5 s; a pausa por mouse e foco cobre só parte dos casos, e quem usa apenas toque não tem como parar a rotação.
 
-## Terminal (planejado, Fase 5)
-- **Saída:** fica numa região `aria-live="polite"`.
-- **Input:** tem `<label>` visível ou `aria-label`.
-- **Foco:** volta para o input após cada comando.
-- **Esc:** fecha o terminal quando aberto como dialog.
-- **Atalhos clicáveis:** todos os comandos também podem ser acionados por botões, para quem não usa teclado ou não conhece os comandos.
-- **Atalho global (Ctrl+`):** não pode capturar teclas quando o foco está num campo de texto.
+## Terminal integrado ao hero
+
+- O controle do header é um switch, com estado anunciado e nome acessível para ativar o modo ou voltar ao visual.
+- O input tem label, foco visível e instruções associadas por `aria-describedby`.
+- Feedback e erros ficam em `role="status"`, com `aria-live="polite"`.
+- ↑/↓ percorrem o histórico; Tab completa somente quando há sugestão para o texto digitado. Shift+Tab e Tab sem correspondência mantêm a navegação de foco.
+- Ajuda e sugestões são botões com área de toque de pelo menos 44 px. Os links da página permanecem como alternativa ao input.
+- A navegação usa as mesmas âncoras, `scroll-mt` e tratamento de foco/hash do site. Movimento reduzido permanece respeitado.
