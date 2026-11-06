@@ -21,7 +21,7 @@ Não escreva um ADR para escolhas triviais ou facilmente reversíveis.
 | [0002](ADR-0002-constants-fonte-unica.md) | Constants como fonte única de dados | Substituído por ADR-0008 |
 | [0003](ADR-0003-gemini-upstash.md) | Gemini como provedor da LLM e Upstash para limites | Rejeitado |
 | [0004](ADR-0004-educacao-sem-pagina.md) | Educação sem página própria | Aceito |
-| [0005](ADR-0005-curriculo-pdf-gerado-pelo-site.md) | Currículo em PDF gerado a partir de `/curriculo` | Aceito (ainda não implementado) |
+| [0005](ADR-0005-curriculo-pdf-gerado-pelo-site.md) | Currículo em PDF gerado a partir de `/curriculo` | Substituído por ADR-0013 |
 | [0006](ADR-0006-motion.md) | Motion para entradas e revelação da home | Aceito |
 | [0007](ADR-0007-next-16.md) | Atualizar o Next.js para a versão 16 (Turbopack) | Proposto |
 | [0008](ADR-0008-organizacao-dados-configs-utils.md) | Separar conteúdo, configurações, integrações e utilitários | Aceito |
@@ -29,5 +29,6 @@ Não escreva um ADR para escolhas triviais ou facilmente reversíveis.
 | [0010](ADR-0010-componentes-da-home-por-secao.md) | Componentes da home agrupados por seção | Aceito |
 | [0011](ADR-0011-modelos-das-constantes.md) | Contratos de conteúdo por domínio | Aceito |
 | [0012](ADR-0012-terminal-integrado-ao-hero.md) | Terminal integrado ao hero | Aceito |
+| [0013](ADR-0013-download-do-curriculo-publico.md) | Download direto do currículo público | Aceito |
 
 ADRs a escrever estão listados no [roadmap](../DOCUMENTATION_ROADMAP.md#adrs-a-registrar).

@@ -2,6 +2,7 @@ import {
 	terminalBuiltins,
 	terminalConfig,
 	terminalNavigation,
+	terminalResume,
 	terminalThemes,
 } from '@/configs/terminal'
 import type { Profile } from '@/types/profile'
@@ -58,6 +59,7 @@ export const buildTerminalCommands = (
 	projects: ReadonlyArray<Project>
 ): ReadonlyArray<TerminalCommand> => [
 	...Object.values(terminalNavigation),
+	terminalResume,
 	...Object.entries(profile.links).map(([name, link]) => ({
 		command: getOpenCommand(name),
 		label: link.label,

@@ -10,7 +10,7 @@ Estrutura-alvo da pasta `docs/` e situação de cada documento. Um documento só
 
 As fases citadas são as do [plano de redesign](plans/redesign-portfolio.md).
 
-**Situação em 06/11/2026:** fases 1 e 2 concluídas. O modo terminal da fase 5 está concluído, integrado ao hero conforme o ADR-0012. Cases ficam em espera até haver mais projetos robustos; currículo/PDF será feito após a fase 5.
+**Situação em 06/11/2026:** fases 1 e 2 concluídas. O modo terminal da fase 5 está concluído, integrado ao hero conforme o ADR-0012. Cases ficam em espera até haver mais projetos robustos; a rota `/curriculo` está pronta; o hero e o terminal já levam a ela.
 
 ## Estrutura
 
@@ -114,7 +114,7 @@ docs/
 | `operations/migrations.md` | ➖ | Não há banco nem schema. |
 
 ## ADRs
-Todos os registros de decisão estão em [decisions/](decisions/README.md). A sequência vai de 0001 a 0012: o 0001 é o template e os demais seguem o índice do README.
+Todos os registros de decisão estão em [decisions/](decisions/README.md). A sequência vai de 0001 a 0013: o 0001 é o template e os demais seguem o índice do README.
 
 Ao tomar uma nova decisão estrutural, crie o próximo número livre com o [template](decisions/ADR-0001-template.md).
 

@@ -27,7 +27,7 @@ Casos atuais:
 - **Um item por empresa ou instituição**, com o cargo atual no título e o período completo. Promoções não viram itens separados nem blocos aninhados.
 - **A promoção entra como atividade com data**, no início da lista (ex.: "Fui promovido de Júnior para Pleno em 01/2025"). O destaque vem do texto, e a cronologia fica correta.
 - **Só crie item próprio para um cargo anterior** se ele tiver escopo diferente e entregas substanciais.
-- **Ordem e duração saem de `utils/experience-timeline.ts`:** use `MM/YYYY` nas datas e `end: null` para vínculo em andamento; `formatPeriod` exibe “Atual”. A ordem no arquivo de constantes não importa.
+- **Ordem e duração saem de `utils/experience-timeline.ts`:** use `MM/YYYY` nas datas e `end: null` para vínculo em andamento; `formatPeriod` exibe “Atual”. A ordem no arquivo de constantes não importa. `displayOrder` define a precedência editorial (padrão `0`); datas ordenam os itens com a mesma precedência. Tutor usa `1` e subsíndico `2`, para ficarem depois das experiências de tecnologia, nessa ordem.
 - **Atuações fora de tecnologia** (docência, gestão) entram na mesma linha do tempo, com `category`. Não cite o nome de condomínios, moradores ou outros terceiros sem divulgação pública.
 
 ## Dados pessoais
@@ -36,4 +36,4 @@ Casos atuais:
 
 ## Consistência
 - **Título, curso e datas iguais em todos os lugares:** home, `/curriculo`, metadados, imagem OG e terminal. O curso é **Engenharia da Computação**, UFMA, 04/2025–04/2028.
-- **O currículo em PDF segue a página `/curriculo`**, e não o contrário.
+- **O currículo em PDF deve acompanhar a página `/curriculo`.** O download entrega o arquivo existente em `public`; alterações nas constantes não regeneram esse arquivo automaticamente.

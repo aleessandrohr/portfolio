@@ -7,6 +7,7 @@ src/
 │   ├── globals.css           # tokens, estilos globais e preparação das animações
 │   ├── opengraph-image.tsx
 │   ├── sitemap.ts
+│   ├── curriculo/            # currículo imprimível (page.tsx e _components/)
 │   └── (home)/               # grupo organizacional; mantém a URL /
 │       ├── page.tsx          # compõe as seções e fornece os dados
 │       └── _components/
@@ -76,4 +77,4 @@ Os estilos de apresentação usam Tailwind. As regras de inicialização e acess
 
 ## Próximas páginas
 
-`app/projetos/[slug]/` e `app/curriculo/` serão irmãos de `(home)`. O terminal está integrado à home, sem rota própria. Cada rota terá seus próprios componentes privados. Uma página não importa detalhes privados de outra; dados e funções compartilhados continuam nas pastas globais. Veja o [plano](../plans/redesign-portfolio.md).
+`app/curriculo/` já é irmã de `(home)`, e `app/projetos/[slug]/` será. O terminal está integrado à home, sem rota própria. Cada rota terá seus próprios componentes privados. Uma página não importa detalhes privados de outra; dados e funções compartilhados continuam nas pastas globais. Veja o [plano](../plans/redesign-portfolio.md).

@@ -1,6 +1,6 @@
 # ADR-0005: Currículo em PDF gerado a partir da página `/curriculo`
 
-- **Status:** Aceito (ainda não implementado)
+- **Status:** Substituído por [ADR-0013](ADR-0013-download-do-curriculo-publico.md)
 - **Data:** 2026-11-05
 - **Relacionado a:** [plano de redesign](../plans/redesign-portfolio.md), Fase 4
 

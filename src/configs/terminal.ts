@@ -21,6 +21,12 @@ export const terminalNavigation = {
 	contact: { command: 'cd ~/contato', label: 'Contato', href: '#contact' },
 } as const satisfies Record<string, TerminalCommand>
 
+export const terminalResume = {
+	command: 'xdg-open curriculo',
+	label: 'Acessar currículo',
+	href: '/curriculo',
+} as const satisfies TerminalCommand
+
 export const terminalBuiltins = {
 	help: { command: 'help', label: 'Ajuda' },
 	clear: { command: 'clear', label: 'Limpar resposta' },

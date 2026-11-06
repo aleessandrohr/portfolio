@@ -1,10 +1,10 @@
-import { ArrowRight, Mail } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { Icon } from '@/components/icon'
 import { TerminalLink } from '@/components/terminal-link'
 import { TerminalText } from '@/components/terminal-text'
 import { Button } from '@/components/ui/button'
-import { terminalNavigation } from '@/configs/terminal'
+import { terminalNavigation, terminalResume } from '@/configs/terminal'
 import type { Profile } from '@/types/profile'
 import type { SocialMedia } from '@/types/social-media'
 import { getOpenCommand } from '@/utils/terminal-commands'
@@ -87,13 +87,13 @@ export const Hero = ({ profile, socialMedia }: Props) => {
 							</Button>
 							<Button asChild variant="outline" className="rounded-full">
 								<TerminalLink
-									command={getOpenCommand('email')}
-									href={`mailto:${profile.email}`}
+									command={terminalResume.command}
+									href={terminalResume.href}
 								>
-									<Mail className="mr-2 h-4 w-4" />
-									<TerminalText command={getOpenCommand('email')}>
-										Enviar e-mail
+									<TerminalText command={terminalResume.command}>
+										{terminalResume.label}
 									</TerminalText>
+									<ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
 								</TerminalLink>
 							</Button>
 						</div>

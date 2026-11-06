@@ -1,4 +1,5 @@
 import { dayjs } from '@/lib/dayjs'
+import type { Experience } from '@/types/experience'
 import type { MonthYear, Period } from '@/types/period'
 
 const OPEN_END_LABEL = 'Atual'
@@ -17,13 +18,14 @@ const toSemesterIndex = (date: ReturnType<typeof dayjs>) =>
 	date.year() * SEMESTERS_PER_YEAR +
 	Math.floor(date.month() / MONTHS_PER_SEMESTER)
 
-/** Ordena pelo fim mais recente, com o início como desempate. */
-export const sortExperiences = <T extends Period>(
+/** Respeita a ordem editorial e usa as datas como desempate. */
+export const sortExperiences = <T extends Experience>(
 	items: ReadonlyArray<T>,
 	now = new Date()
 ) =>
 	[...items].sort(
 		(a, b) =>
+			(a.displayOrder ?? 0) - (b.displayOrder ?? 0) ||
 			readMonth(b.end, now).diff(readMonth(a.end, now), 'month') ||
 			readMonth(b.start, now).diff(readMonth(a.start, now), 'month')
 	)

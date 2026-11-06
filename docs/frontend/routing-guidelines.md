@@ -1,7 +1,8 @@
 # Rotas
 
 ## Hoje
-- **Rotas:** só `/` (`src/app/(home)/page.tsx`) e `/opengraph-image`, além do sitemap em `/sitemap.xml`.
+- **Rotas:** `/` (`src/app/(home)/page.tsx`), `/curriculo` (`src/app/curriculo/page.tsx`) e `/opengraph-image`, além do sitemap em `/sitemap.xml`.
+- **`/curriculo`:** página estática no estilo da home, lida de `constants/`: cabeçalho (nome, cargo, resumo, divisor ondulado e contatos), Habilidades em badges, Experiência em linha do tempo, Projetos e Educação. Não usa o header da home nem o provider do terminal. O botão “Baixar PDF” faz download direto do arquivo em `public`, pelo endereço de `profile.resumePdfUrl`. O CSS de impressão permanece disponível para impressão manual pelo navegador. O hero tem o botão “Acessar currículo” e o terminal tem `xdg-open curriculo`; não há item no menu.
 - **Navegação por âncoras:** o menu (`configs/menu-items.ts`) leva às seções `#about`, `#projects`, `#experiences`, `#education` e `#contact`. As seções usam `scroll-mt-28` para não ficar atrás da barra fixa.
 - **Hash da demonstração:** `#<id>-demo` (ex.: `#inorbit-demo`) abre o dialog da demonstração do projeto. É um link compartilhável. A sincronização fica em `app/(home)/_components/projects/project-card/demo-dialog.tsx`, com o evento `hashchange`.
 
@@ -22,7 +23,6 @@ O modo terminal usa `/?mode=terminal` e mantém as mesmas seções da home. Não
 | Rota | Fase | Observação |
 |---|---|---|
 | `/projetos/[slug]` | 3 | `generateStaticParams` a partir de `projects`, `generateMetadata` por projeto |
-| `/curriculo` | 4 | página com CSS de impressão |
 
 
 Regras para rotas novas:

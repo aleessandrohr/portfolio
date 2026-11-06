@@ -8,6 +8,8 @@ export interface Profile {
 	photo: { src: string; alt: string }
 	fullName: string
 	role: string
+	resumeStack: string
+	resumePdfUrl: string
 	location: string
 	email: string
 	siteUrl: string

@@ -235,3 +235,29 @@
 		background: hsl(var(--muted));
 	}
 }
+
+/* Impressão do currículo: folha A4 em fundo branco, usando os valores do tema claro. */
+@page {
+	size: A4;
+	margin: 14mm;
+}
+
+@media print {
+	:root,
+	:root.dark {
+		--background: 0 0% 100%;
+		--foreground: 0 0% 12%;
+		--muted-foreground: 0 0% 30%;
+		--border: 0 0% 87%;
+		--brand: 217 91% 40%;
+	}
+
+	body {
+		background-image: none;
+		font-size: 11pt;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}

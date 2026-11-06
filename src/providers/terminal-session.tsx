@@ -85,7 +85,11 @@ export const TerminalSessionProvider = ({
 			if (result.type !== 'navigate') return result
 
 			const { href } = result.command
-			if (href.startsWith('#') || href.startsWith('mailto:'))
+			if (
+				href.startsWith('#') ||
+				href.startsWith('/') ||
+				href.startsWith('mailto:')
+			)
 				window.location.href = href
 			else window.open(href, '_blank', 'noopener,noreferrer')
 

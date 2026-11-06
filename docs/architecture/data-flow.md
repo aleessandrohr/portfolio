@@ -13,7 +13,7 @@ configs/menu-items.ts ────► components/header.tsx (navegação global)
 
 - **Build:** os dados são lidos e as páginas são pré-renderizadas.
 - **Cliente:** guarda só estado de interface: tema, dialog aberto e carregamento do iframe. Ver [state-management](../frontend/state-management.md).
-- **Ordem na tela:** grupos de habilidades e redes seguem a ordem das chaves. Projetos destacados vêm primeiro; experiências são ordenadas por data. Todas as experiências ficam na coleção `experiences`, diferenciadas por categoria.
+- **Ordem na tela:** grupos de habilidades e redes seguem a ordem das chaves. Projetos destacados vêm primeiro; experiências seguem `displayOrder` (padrão `0`) e, em caso de empate, as datas. Tutor (`1`) e subsíndico (`2`) ficam por último, nessa ordem. Todas as experiências ficam na coleção `experiences`, diferenciadas por categoria.
 
 ## Para alterar conteúdo
 | Quero mudar | Arquivo |

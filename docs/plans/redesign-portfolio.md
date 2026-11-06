@@ -8,7 +8,7 @@ Atualizado em **06/11/2026**: fases **1 e 2 concluídas**. A fase 5 está conclu
 | 1 — Fonte única de dados | Concluída |
 | 2 — Layout e home | Concluída |
 | 3 — Páginas de case | Em espera, até haver mais projetos robustos |
-| 4 — Currículo e PDF | Planejada para depois da fase 5 |
+| 4 — Currículo e PDF | Concluída (rota, botão no hero e comando no terminal) |
 | 5 — Modo terminal integrado ao hero | Concluída |
 
 ## Contexto inicial
@@ -56,11 +56,11 @@ Decisões já tomadas:
 - Animações com Motion: hero ocupa a primeira tela, textos principais aparecem letra a letra e as seções têm entrada progressiva. Respeita movimento reduzido e mantém o conteúdo acessível sem JavaScript.
 - Open Graph em 1200 × 630, com dados atuais, foto e fontes locais; favicon de terminal em `public/icon.svg`, referenciado pelo layout.
 - Home (`app/(home)/page.tsx`), dividida em `app/(home)/_components/*`:
-  1. **Hero:** foto (`/static/assets/profile.png`) com brilho radial azul e grade ao fundo, "Olá, eu sou", nome com sobrenome em azul, cargo e frase. Ações: Ver projetos e Enviar e-mail, além dos ícones de redes (`socialMedia`). A ação de currículo fica para a fase 4.
+  1. **Hero:** foto (`/static/assets/profile.png`) com brilho radial azul e grade ao fundo, "Olá, eu sou", nome com sobrenome em azul, cargo e frase. Ações: Ver projetos e Acessar currículo (`/curriculo`), além dos ícones de redes (`socialMedia`), que incluem o e-mail.
   2. **Sobre e habilidades:** Sobre ocupa 50% e Habilidades 50% no desktop; no celular, ficam empilhados. Um único bloco reúne os grupos técnicos em badges. Os dados vêm de `profile.ts` e de `skills` em `skills.ts`. A coleção interpessoal não era renderizada e foi removida na limpeza de dados sem uso. Sem painel interativo ou barras de porcentagem.
   3. **Projetos:** carrossel (shadcn com Embla), com três cards no desktop, dois no tablet e um card com parte do próximo no celular. Workspace e Digitaliza Aí aparecem primeiro, com capas neutras, seguidos por in.orbit e Letmeask. Avança a cada 2 s, pausa com mouse ou foco e respeita movimento reduzido. Os cards usam site e demo quando disponíveis; links para cases ficam para a fase 3. Detalhes em [ui-ux-guidelines](../frontend/ui-ux-guidelines.md).
   4. **Experiência:** linha do tempo compacta, usando o `Experience`, com todas as atividades visíveis, sem expandir. O link para currículo fica para a fase 4.
-     Tutor e subsíndico entram na mesma linha do tempo, ordenada por data (`utils/experience-timeline.ts`), com rótulo de categoria e duração; o nome do condomínio fica omitido por ser repositório público.
+     Tutor e subsíndico entram na mesma linha do tempo, após as experiências de tecnologia, nessa ordem. A ordenação usa `displayOrder` e datas (`utils/experience-timeline.ts`), com rótulo de categoria e duração; o nome do condomínio fica omitido por ser repositório público.
   5. **Educação:** card simples.
   6. **Contato:** cartão no estilo de perfil do GitHub: foto e link do perfil no topo, grade decorativa com as iniciais (`app/(home)/_components/pixel-grid.tsx`, não representa commits), e embaixo, centralizados, nome, cargo, e-mail, LinkedIn, localização (sem telefone) e botão de e-mail. No hero, a grade fica atrás do conteúdo, no centro, desfocada e quase transparente no desktop, e no pé da tela no celular, junto com um brilho azul suave no hero do celular. Item "Contato" no menu do header.
 
@@ -75,19 +75,19 @@ Decisões já tomadas:
 - `app/curriculo/page.tsx` repete a ordem e o texto do PDF:
   - **Cabeçalho em 3 colunas:** cidade, e-mail e site | nome, título e stack | LinkedIn e GitHub.
   - **Seções:** Resumo, Habilidades, Experiência (em linha do tempo na tela), Projetos e Educação.
-- Botão "Imprimir / Salvar PDF" (`window.print()`).
+- Botão “Baixar PDF”: download direto de `public/Resumo de Alessandro Henrique Ramos.pdf`, com endereço em `profile.resumePdfUrl`.
 - Bloco `@media print` em `globals.css`:
   - folha A4 e fundo branco;
   - sem header, footer nem botões;
   - layout em lista, como no PDF.
-- O PDF passa a sair do próprio site.
+- O arquivo PDF existente é entregue diretamente; o CSS de impressão da página permanece disponível para uso manual. Ver [ADR-0013](../decisions/ADR-0013-download-do-curriculo-publico.md).
 
 ## Fase 5: modo terminal integrado ao hero
 
 Escopo reformulado pelo autor em 06/11/2026. O site preserva o hero, a foto, os cards, as seções, os temas e a identidade visual. O controle `>_` alterna rótulos de interface para comandos e exibe uma linha de comando dentro do hero. A decisão está no [ADR-0012](../decisions/ADR-0012-terminal-integrado-ao-hero.md).
 
 - **Navegação:** `cd ~`, `cd ~/sobre`, `cd ~/projetos`, `cd ~/experiencia`, `cd ~/educacao` e `cd ~/contato` levam às âncoras existentes. Os botões continuam disponíveis.
-- **Links:** `xdg-open email`, `xdg-open github`, `xdg-open linkedin` e `xdg-open <id>` usam os mesmos destinos públicos dos links visuais. `demo <id>` abre o dialog existente, quando há demonstração.
+- **Links:** `xdg-open curriculo` abre `/curriculo` na mesma aba; `xdg-open email`, `xdg-open github`, `xdg-open linkedin` e `xdg-open <id>` usam os mesmos destinos públicos dos links visuais. `demo <id>` abre o dialog existente, quando há demonstração.
 - **Ajuda:** `help` mostra comandos clicáveis no hero; `clear` limpa a resposta. ↑/↓ percorrem o histórico da sessão e Tab completa os comandos cadastrados.
 - **Comandos de consulta e gestão:** `ls` lista as seções, `ls projetos` lista os ids dos projetos, `whoami` mostra nome, cargo e cidade, `cat sobre` mostra o resumo, `history` lista os comandos da sessão e `theme dark|light|system` troca o tema. As respostas de texto saem de `buildTerminalOutputs(profile, projects)`; os temas ficam em `configs/terminal.ts`. São comandos fixos e cadastrados, sem shell.
 - **Dados:** a página monta os comandos a partir de `configs/terminal.ts`, `profile` e `projects`. Não há conteúdo profissional duplicado nem destinos para páginas ainda não implementadas.

@@ -30,6 +30,7 @@ export const experiences = {
 	tutor: {
 		title: 'Tutor de apoio acadêmico',
 		category: 'Docência',
+		displayOrder: 1,
 		organization: 'UFMA - Universidade Federal do Maranhão',
 		details: ['Autônomo', 'São Luís, MA'],
 		start: '09/2025',
@@ -41,6 +42,7 @@ export const experiences = {
 	subsindico: {
 		title: 'Subsíndico',
 		category: 'Gestão',
+		displayOrder: 2,
 		organization: 'Condomínio residencial',
 		details: ['São Luís, MA'],
 		start: '04/2026',
